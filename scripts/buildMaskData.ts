@@ -1,17 +1,8 @@
 import { saveToFile } from "./shared/saveToFile";
+import { Mask } from "./types";
 
 const DB_NAME = "hashmasks.json";
 const dbData = require(`../db/${DB_NAME}`);
-
-type Mask = {
-  id?: string;
-  index: string;
-  character: string;
-  mask: string;
-  eyes: string;
-  skin: string;
-  item: string;
-};
 
 type RawMask = {
   index: string;

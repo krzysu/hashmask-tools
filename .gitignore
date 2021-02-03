@@ -30,3 +30,6 @@ yarn-error.log*
 # my log files
 /db/_*
 punk-tools-firebase-*
+
+# temp
+/assets

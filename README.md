@@ -2,6 +2,8 @@
 
 TODO
 
-- crawl all hashmasks with attributes
-- get all images
+- download all mask images
+- calculate stats
+- find the same traits
 - run image comparison
+- build FE to browse them
