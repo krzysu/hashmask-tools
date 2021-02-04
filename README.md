@@ -3,6 +3,6 @@
 TODO
 
 - download all mask images
-- minify mask data
 - run image comparison
 - build FE to browse them
+- connect opensea API to get prices

@@ -48,9 +48,7 @@ const compareMaskToOthers = (
 
 const prepareToSave = (id: string, similarityData: string[]) => {
   return {
-    [id]: {
-      similarTo: similarityData.sort(),
-    },
+    [id]: similarityData.map((s: string) => Number(s)).sort(),
   };
 };
 
