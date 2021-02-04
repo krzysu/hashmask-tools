@@ -3,7 +3,6 @@
 TODO
 
 - download all mask images
-- calculate stats
-- find the same traits
+- minify mask data
 - run image comparison
 - build FE to browse them
