@@ -1,6 +1,7 @@
 import { saveToFile } from "./shared/saveToFile";
 import { Mask } from "./types";
 import statDB from "../db/stats.json";
+import scoreDB from "../db/rarityScore.json";
 
 const maskDbData = require("../db/hashmasks.json") as Record<string, Mask>;
 
@@ -13,8 +14,9 @@ type MaskTrait = number;
 type Eyes = number;
 type Skin = number;
 type Item = number;
+type Score = number;
 
-type MinifiedMask = [Id, Index, Character, MaskTrait, Eyes, Skin, Item];
+type MinifiedMask = [Id, Index, Character, MaskTrait, Eyes, Skin, Item, Score];
 type MinifiedMasks = Record<Id, MinifiedMask>;
 
 const allTraits = {
@@ -39,6 +41,7 @@ const buildMask = (id: string): MinifiedMask => {
     encode("eyes")(m.eyes),
     encode("skin")(m.skin),
     encode("item")(m.item),
+    scoreDB.find((i) => i.id === id)?.score || 0,
   ];
 };
 
