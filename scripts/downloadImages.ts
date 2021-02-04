@@ -32,7 +32,7 @@ const downloadAsync = async (mask: Mask, callback: () => void) => {
 const TOTAL_MASKS = 16384;
 const ALL_MASK_IDS = [...Array(TOTAL_MASKS).keys()].map((i) => i.toString());
 
-const BATCH = [1100, 1150];
+const BATCH = [1400, 1600];
 const DELAY = 3000;
 
 const main = async () => {

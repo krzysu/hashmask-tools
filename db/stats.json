@@ -1,0 +1,59 @@
+{
+  "characterStats": [
+    { "character": "Male", "count": 8660 },
+    { "character": "Female", "count": 5480 },
+    { "character": "Golden Robot", "count": 165 },
+    { "character": "Puppet", "count": 591 },
+    { "character": "Robot", "count": 1476 },
+    { "character": "Mystical", "count": 12 }
+  ],
+  "maskStats": [
+    { "mask": "Indian", "count": 802 },
+    { "mask": "Chinese", "count": 885 },
+    { "mask": "Animal", "count": 2061 },
+    { "mask": "Street", "count": 925 },
+    { "mask": "Basic", "count": 2216 },
+    { "mask": "Mexican", "count": 2476 },
+    { "mask": "African", "count": 967 },
+    { "mask": "Hawaiian", "count": 1573 },
+    { "mask": "Doodle", "count": 2187 },
+    { "mask": "Pixel", "count": 980 },
+    { "mask": "Crayon", "count": 490 },
+    { "mask": "Abstract", "count": 319 },
+    { "mask": "Steampunk", "count": 229 },
+    { "mask": "Unique", "count": 10 },
+    { "mask": "Aztec", "count": 263 },
+    { "mask": "Unmasked", "count": 1 }
+  ],
+  "eyesStats": [
+    { "eyes": "Freak", "count": 435 },
+    { "eyes": "Dark", "count": 7420 },
+    { "eyes": "Green", "count": 2634 },
+    { "eyes": "Blue", "count": 3532 },
+    { "eyes": "Glass", "count": 1626 },
+    { "eyes": "Painted", "count": 591 },
+    { "eyes": "Mystical", "count": 12 },
+    { "eyes": "Heterochromatic", "count": 134 }
+  ],
+  "skinStats": [
+    { "skin": "Freak", "count": 152 },
+    { "skin": "Dark", "count": 3784 },
+    { "skin": "Light", "count": 4252 },
+    { "skin": "Gold", "count": 165 },
+    { "skin": "Wood", "count": 591 },
+    { "skin": "Gray", "count": 4658 },
+    { "skin": "Steel", "count": 1476 },
+    { "skin": "Blue", "count": 1292 },
+    { "skin": "Mystical", "count": 12 },
+    { "skin": "Transparent", "count": 2 }
+  ],
+  "itemStats": [
+    { "item": "Mirror", "count": 319 },
+    { "item": "No Item", "count": 14533 },
+    { "item": "Bottle", "count": 377 },
+    { "item": "Book", "count": 450 },
+    { "item": "Toilet Paper", "count": 395 },
+    { "item": "Shadow Monkey", "count": 233 },
+    { "item": "Golden Toilet Paper", "count": 77 }
+  ]
+}
