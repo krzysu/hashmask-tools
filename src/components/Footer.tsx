@@ -9,7 +9,7 @@ export const Footer: FC<Props> = ({ buildDate }) => {
   return (
     <Box as="footer" pt="12" pb="4">
       <Text>
-        PunkTools - built by Kris Urbas{" "}
+        HashmaskTools - built by Kris Urbas{" "}
         <Link href="https://twitter.com/krzysu" isExternal>
           @krzysu
         </Link>{" "}

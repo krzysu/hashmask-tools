@@ -1,5 +1,5 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask } from "./types";
+import { Mask } from "../shared/types";
 
 const DB_NAME = "hashmasks.json";
 const dbData = require(`../db/${DB_NAME}`);

@@ -1,10 +1,8 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask } from "./types";
+import { Mask, Traits } from "../shared/types";
 import statDB from "../db/stats.json";
 
 const maskDbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
-
-type Traits = "character" | "mask" | "eyes" | "skin" | "item";
 
 const getTraitTotal = (traitName: Traits) => (traitValue: string) =>
   statDB[`${traitName}Stats`].find((item) => item[traitName] === traitValue)

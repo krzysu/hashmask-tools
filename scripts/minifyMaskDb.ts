@@ -1,23 +1,11 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask } from "./types";
+import { Mask, MinifiedMask, MinifiedMasks } from "../shared/types";
 import statDB from "../db/stats.json";
 import scoreDB from "../db/rarityScore.json";
 
 const maskDbData = require("../db/hashmasks.json") as Record<string, Mask>;
 
 const DB_NAME = "hashmasks.min.json";
-
-type Id = number;
-type Index = number;
-type Character = number;
-type MaskTrait = number;
-type Eyes = number;
-type Skin = number;
-type Item = number;
-type Score = number;
-
-type MinifiedMask = [Id, Index, Character, MaskTrait, Eyes, Skin, Item, Score];
-type MinifiedMasks = Record<Id, MinifiedMask>;
 
 const allTraits = {
   character: statDB.characterStats.map((i) => i.character),

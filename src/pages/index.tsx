@@ -6,11 +6,11 @@ const Index: FC = () => {
   return (
     <>
       <Head>
-        <title>{`PunkTools`}</title>
+        <title>{`HashmaskTools`}</title>
       </Head>
 
       <Box>
-        <Heading mb="8">PunkTools</Heading>
+        <Heading mb="8">HashmaskTools</Heading>
       </Box>
     </>
   );

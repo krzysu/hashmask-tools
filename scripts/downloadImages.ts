@@ -1,6 +1,6 @@
 import fs from "fs";
 import fetch from "node-fetch";
-import { Mask } from "./types";
+import { Mask } from "../shared/types";
 
 const dbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
 const DESTINATION_FOLDER = "./assets/";

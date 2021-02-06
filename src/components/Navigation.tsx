@@ -11,7 +11,7 @@ type Item = {
 
 const homeItem = {
   href: "/",
-  label: "PunkTools",
+  label: "HashmaskTools",
 };
 
 const items = [
@@ -22,11 +22,6 @@ const items = [
   {
     href: "/watchlist",
     label: "Watchlist",
-  },
-  {
-    href: "https://www.larvalabs.com/cryptopunks/attributes",
-    label: "Types and Attributes",
-    isExternal: true,
   },
 ];
 

@@ -1,5 +1,5 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask } from "./types";
+import { Mask } from "../shared/types";
 
 const maskDbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
 
