@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import {
   Box,
   Heading,
-  Image,
   Link,
   Stat,
   StatLabel,
@@ -11,6 +10,8 @@ import {
   Flex,
 } from "@chakra-ui/core";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+
+import { MaskImage } from "./MaskImage";
 import { formatPrice } from "../model";
 import { ViewMask } from "../../shared/types";
 
@@ -21,14 +22,14 @@ type Props = {
 export const MaskHero: FC<Props> = ({ mask }) => (
   <>
     <Flex direction={["column", null, "row"]}>
-      <Image
-        src={`https://hashmasksstore.blob.core.windows.net/hashmaskspreview/${mask.index}.png`}
-        alt={`Hashmask #${mask.id}`}
+      <MaskImage
+        mask={mask}
         width={["100%", "75%", "40%"]}
         maxW="420px"
         mx="auto"
         mb={["4", null, "0"]}
         mr={["auto", "auto", "8", "16"]}
+        fallbackProps={{ width: ["100%", "75%", "40%"] }}
       />
 
       <Box flexGrow={1}>

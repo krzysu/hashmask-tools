@@ -27,9 +27,5 @@ yarn-error.log*
 # local env files
 .env
 
-# my log files
-/db/_*
-punk-tools-firebase-*
-
 # temp
 /assets

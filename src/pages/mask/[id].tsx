@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Box, Flex, Spinner } from "@chakra-ui/core";
+import { Box, Flex, Heading, Spinner } from "@chakra-ui/core";
+
 import { MaskHero } from "../../components/MaskHero";
-import { buildMask } from "../../model";
+import { MaskList } from "../../components/MaskList";
+import { buildMask, buildSameTraitMasks } from "../../model";
 
 const MaskPage: FC = () => {
   const { query } = useRouter();
@@ -23,6 +25,8 @@ const MaskPage: FC = () => {
     );
   }
 
+  const sameTraitMasks = buildSameTraitMasks(id);
+
   return (
     <>
       <Head>
@@ -32,6 +36,13 @@ const MaskPage: FC = () => {
       <Box mb="12">
         <MaskHero mask={mask} />{" "}
       </Box>
+
+      {sameTraitMasks.length > 0 && (
+        <Box mb="12">
+          <Heading mb="8">{`Hashmasks with the same traits (${sameTraitMasks.length})`}</Heading>
+          <MaskList masks={sameTraitMasks.slice(0, 50)} />
+        </Box>
+      )}
     </>
   );
 };

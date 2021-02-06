@@ -1,5 +1,5 @@
 import { allTraits } from "./stats";
-import { minMasksDB } from "./db";
+import { minMasksDB, sameTraitDB } from "./db";
 import { ViewMask, MinifiedMask, Traits } from "../shared/types";
 
 const decode = (traitName: Traits) => (traitIndex: number): string =>
@@ -27,3 +27,9 @@ export const buildMask = (id: string): ViewMask => {
 };
 
 export const formatPrice = (price: number): string => `${price}Ξ`;
+
+export const buildSameTraitMasks = (id: string): ViewMask[] => {
+  return sameTraitDB[id].map((sameTraitId) =>
+    buildMask(sameTraitId.toString())
+  );
+};
