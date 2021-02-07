@@ -1,5 +1,5 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask, Traits } from "../shared/types";
+import { Mask, StatItem, Traits } from "../shared/types";
 
 const dbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
 
@@ -12,34 +12,34 @@ const allUnique = (traitName: Traits) => () =>
 const filterBy = (traitName: Traits) => (character: string) =>
   Object.values(dbData).filter((mask) => mask[traitName] === character);
 
-const allCount = (traitName: Traits) => () => {
+const allCount = (traitName: Traits) => (): StatItem[] => {
   const allUniqueTraits = [...allUnique(traitName)()] as string[];
 
   return allUniqueTraits.map((trait) => {
-    const withCharacter = filterBy(traitName)(trait);
-    return { [traitName]: trait, count: withCharacter.length };
+    const withTrait = filterBy(traitName)(trait);
+    return { name: trait, count: withTrait.length };
   });
 };
 
-const characterStats = allCount("character")();
-const maskStats = allCount("mask")();
-const eyesStats = allCount("eyes")();
-const skinStats = allCount("skin")();
-const itemStats = allCount("item")();
+const character = allCount("character")();
+const mask = allCount("mask")();
+const eyes = allCount("eyes")();
+const skin = allCount("skin")();
+const item = allCount("item")();
 
-console.log(characterStats);
-console.log(maskStats);
-console.log(eyesStats);
-console.log(skinStats);
-console.log(itemStats);
+console.log(character);
+console.log(mask);
+console.log(eyes);
+console.log(skin);
+console.log(item);
 
 saveToFile(
   {
-    characterStats,
-    maskStats,
-    eyesStats,
-    skinStats,
-    itemStats,
+    character,
+    mask,
+    eyes,
+    skin,
+    item,
   },
   "stats.json"
 );

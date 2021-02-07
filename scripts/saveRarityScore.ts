@@ -1,12 +1,11 @@
 import { saveToFile } from "./shared/saveToFile";
 import { Mask, Traits } from "../shared/types";
-import statDB from "../db/stats.json";
+import statsDB from "../db/stats.json";
 
 const maskDbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
 
 const getTraitTotal = (traitName: Traits) => (traitValue: string) =>
-  statDB[`${traitName}Stats`].find((item) => item[traitName] === traitValue)
-    ?.count || 0;
+  statsDB[traitName].find((item) => item.name === traitValue)?.count || 0;
 
 // lower better
 const calculateRarityScore = (mask: Mask): number => {

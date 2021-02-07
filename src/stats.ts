@@ -1,12 +1,16 @@
+import { Traits } from "../shared/types";
 import { sameTraitDB, statsDB } from "./db";
 
 export const allTraits = {
-  character: statsDB.characterStats.map((i) => i.character),
-  mask: statsDB.maskStats.map((i) => i.mask),
-  eyes: statsDB.eyesStats.map((i) => i.eyes),
-  skin: statsDB.skinStats.map((i) => i.skin),
-  item: statsDB.itemStats.map((i) => i.item),
+  character: statsDB.character.map((i) => i.name),
+  mask: statsDB.mask.map((i) => i.name),
+  eyes: statsDB.eyes.map((i) => i.name),
+  skin: statsDB.skin.map((i) => i.name),
+  item: statsDB.item.map((i) => i.name),
 };
+
+export const getTraitTotal = (traitName: Traits) => (traitValue: string) =>
+  statsDB[traitName].find((item) => item.name === traitValue)?.count || 0;
 
 export const totalSameTraitMasks = (id: string): number =>
   sameTraitDB[id].total;

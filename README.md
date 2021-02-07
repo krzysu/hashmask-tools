@@ -8,6 +8,7 @@ TODO
 - add collections
 - use more traits from spreadsheet
 - connect opensea API to get prices
+- display offered price
 - opensea referal
 
 ### Resources

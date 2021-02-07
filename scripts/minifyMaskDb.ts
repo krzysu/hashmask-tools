@@ -1,6 +1,6 @@
 import { saveToFile } from "./shared/saveToFile";
 import { Mask, MinifiedMask, MinifiedMasks, Traits } from "../shared/types";
-import statDB from "../db/stats.json";
+import statsDB from "../db/stats.json";
 import scoreDB from "../db/rarityScore.json";
 
 const maskDbData = require("../db/hashmasks.json") as Record<string, Mask>;
@@ -8,11 +8,11 @@ const maskDbData = require("../db/hashmasks.json") as Record<string, Mask>;
 const DB_NAME = "hashmasks.min.json";
 
 const allTraits = {
-  character: statDB.characterStats.map((i) => i.character),
-  mask: statDB.maskStats.map((i) => i.mask),
-  eyes: statDB.eyesStats.map((i) => i.eyes),
-  skin: statDB.skinStats.map((i) => i.skin),
-  item: statDB.itemStats.map((i) => i.item),
+  character: statsDB.character.map((i) => i.name),
+  mask: statsDB.mask.map((i) => i.name),
+  eyes: statsDB.eyes.map((i) => i.name),
+  skin: statsDB.skin.map((i) => i.name),
+  item: statsDB.item.map((i) => i.name),
 };
 
 const encode = (traitName: Traits) => (traitValue: string): number =>

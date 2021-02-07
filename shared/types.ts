@@ -43,3 +43,8 @@ export type Similarity = {
   total: number;
   ids: number[];
 };
+
+export type StatItem = {
+  name: string;
+  count: number;
+};
