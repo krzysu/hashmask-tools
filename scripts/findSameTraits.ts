@@ -12,7 +12,7 @@ const ALL_MASK_IDS = [...Array(TOTAL_MASKS).keys()].map((i) => i.toString());
 const getOtherMaskIds = (maskId: string) =>
   ALL_MASK_IDS.filter((id) => id !== maskId);
 
-const isEqual = (obj1, obj2) => {
+const isEqual = (obj1: any, obj2: any) => {
   let props1 = Object.getOwnPropertyNames(obj1);
   let props2 = Object.getOwnPropertyNames(obj2);
 

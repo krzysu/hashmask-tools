@@ -47,7 +47,7 @@ const getOffersForPage = async (page: number): Promise<Offer[]> => {
     );
 
     return {
-      id: order.metadata?.asset.id,
+      id: order.metadata.asset.id,
       price,
       symbol: order.paymentTokenContract?.symbol || "",
     };

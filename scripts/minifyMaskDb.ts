@@ -1,5 +1,5 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask, MinifiedMask, MinifiedMasks } from "../shared/types";
+import { Mask, MinifiedMask, MinifiedMasks, Traits } from "../shared/types";
 import statDB from "../db/stats.json";
 import scoreDB from "../db/rarityScore.json";
 
@@ -15,7 +15,7 @@ const allTraits = {
   item: statDB.itemStats.map((i) => i.item),
 };
 
-const encode = (traitName: string) => (traitValue: string): number =>
+const encode = (traitName: Traits) => (traitValue: string): number =>
   allTraits[traitName].findIndex((v: string) => v === traitValue);
 
 const buildMask = (id: string): MinifiedMask => {

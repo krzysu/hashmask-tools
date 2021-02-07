@@ -24,26 +24,22 @@ const revealedMaskIndex = (id: string): string => {
   return ((Number(id) + STARTING_INDEX) % 16384).toString();
 };
 
-const prepareToSave = (data: Array<Mask | undefined>) => {
+const prepareToSave = (data: Mask[]) => {
   return data
     .filter((i) => !!i)
     .reduce((acc, { id, ...mask }) => {
       return {
         ...acc,
-        [id]: {
+        [id!]: {
           ...mask,
         },
       };
     }, {});
 };
 
-const masks: Array<Mask | undefined> = ALL_MASK_IDS.map((id) => {
+const masks: Mask[] = ALL_MASK_IDS.map((id) => {
   const index = revealedMaskIndex(id);
-  const rawMask = rawMasks.find((mask) => mask.index === index);
-
-  if (!rawMask) {
-    return;
-  }
+  const rawMask = rawMasks.find((mask) => mask.index === index) as RawMask;
 
   return {
     id,

@@ -25,15 +25,15 @@ const downloadAsync = async (mask: Mask, callback: () => void) => {
     fs.writeFile(destination, buffer, callback);
   } catch (err) {
     console.error(err);
-    ERRORS.push(mask.id);
+    ERRORS.push(mask.id || "unknown");
   }
 };
 
 const TOTAL_MASKS = 16384;
 const ALL_MASK_IDS = [...Array(TOTAL_MASKS).keys()].map((i) => i.toString());
 
-const BATCH = [3400, 4000];
-const DELAY = 3000;
+const BATCH = [5000, 8000];
+const DELAY = 1000;
 
 const main = async () => {
   await Promise.all(

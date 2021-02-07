@@ -1,20 +1,18 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask } from "../shared/types";
-
-type MaskKey = keyof Mask;
+import { Mask, Traits } from "../shared/types";
 
 const dbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
 
-const allUnique = (traitName: MaskKey) => () =>
+const allUnique = (traitName: Traits) => () =>
   Object.values(dbData).reduce((set, mask: Mask) => {
     set.add(mask[traitName]);
     return set;
   }, new Set());
 
-const filterBy = (traitName: MaskKey) => (character: string) =>
+const filterBy = (traitName: Traits) => (character: string) =>
   Object.values(dbData).filter((mask) => mask[traitName] === character);
 
-const allCount = (traitName: MaskKey) => () => {
+const allCount = (traitName: Traits) => () => {
   const allUniqueTraits = [...allUnique(traitName)()] as string[];
 
   return allUniqueTraits.map((trait) => {
