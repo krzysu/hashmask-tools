@@ -21,6 +21,7 @@ export const MaskImage: FC<Props & ImageProps> = ({
   return (
     <Image
       src={`https://hashmasksstore.blob.core.windows.net/hashmaskspreview/${mask.index}.png`}
+      // src={`/assets/${mask.index}.png`}
       alt={`Hashmask #${mask.id}`}
       fallback={
         <Center {...fallbackProps}>

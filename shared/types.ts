@@ -11,6 +11,7 @@ export type Mask = {
 export type Traits = "character" | "mask" | "eyes" | "skin" | "item";
 
 export type ViewMask = Mask & {
+  id: string;
   score: number;
   lastPrice?: number;
   offeredPrice?: number;

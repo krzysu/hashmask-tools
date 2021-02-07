@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import { Mask } from "../shared/types";
 
 const dbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
-const DESTINATION_FOLDER = "./assets/";
+const DESTINATION_FOLDER = "./public/assets/";
 const URI = "https://hashmasksstore.blob.core.windows.net/hashmaskspreview/";
 
 const sleep = (ms: number) => {
@@ -32,12 +32,14 @@ const downloadAsync = async (mask: Mask, callback: () => void) => {
 const TOTAL_MASKS = 16384;
 const ALL_MASK_IDS = [...Array(TOTAL_MASKS).keys()].map((i) => i.toString());
 
-const BATCH = [5000, 8000];
+const FAILED_IDS = [];
+const BATCH = [8000, 9000];
 const DELAY = 1000;
 
 const main = async () => {
   await Promise.all(
     ALL_MASK_IDS.slice(...BATCH).map(async (id, index) => {
+      // FAILED_IDS.map(async (id, index) => {
       const fullMask = {
         id,
         ...dbData[id],

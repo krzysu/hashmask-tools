@@ -12,6 +12,7 @@ import {
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 import { MaskImage } from "./MaskImage";
+import { WatchlistButton } from "./WatchlistButton";
 import { formatPrice } from "../model";
 import { ViewMask } from "../../shared/types";
 
@@ -34,6 +35,10 @@ export const MaskHero: FC<Props> = ({ mask }) => (
 
       <Box flexGrow={1}>
         <Heading mb="4">{`Hashmask #${mask.id}`}</Heading>
+
+        <Box mb="4">
+          <WatchlistButton id={mask.id} />
+        </Box>
 
         <Box mb="8">
           <Box>

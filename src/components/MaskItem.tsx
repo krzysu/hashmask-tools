@@ -4,6 +4,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 
 import { MaskImage } from "./MaskImage";
+import { WatchlistIcon } from "./WatchlistIcon";
 import { formatPrice } from "../model";
 import { ViewMask } from "../../shared/types";
 
@@ -18,6 +19,10 @@ export const MaskItem: FC<Props> = ({ mask }) => (
         <MaskImage mask={mask} fallbackProps={{ height: "180px" }} />
       </a>
     </NextLink>
+
+    <Box position="absolute" top="2" left="2">
+      <WatchlistIcon id={mask.id} />
+    </Box>
 
     <Box mb="4">
       <Text size="sm" fontWeight="bold">
