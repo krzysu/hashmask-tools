@@ -25,6 +25,7 @@ const BrowsePage: FC = () => {
     defaultFilterValues
   );
   const [isOffered, setIsOffered] = useState<boolean>(false);
+  const [isLowPrice, setIsLowPrice] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<SortBy>("id");
 
   useEffect(() => {
@@ -33,12 +34,13 @@ const BrowsePage: FC = () => {
       startIndex,
       sortBy,
       isOffered,
+      isLowPrice,
     });
     setMasks(items);
     setHasMore(hasMore);
     setLastIndex(lastIndex);
     setIsLoading(false);
-  }, [filterValues, isOffered, sortBy, startIndex]);
+  }, [filterValues, isOffered, isLowPrice, sortBy, startIndex]);
 
   // will trigger effect
   const showMore = () => setStartIndex(lastIndex);
@@ -57,6 +59,7 @@ const BrowsePage: FC = () => {
 
   const handleCheckboxChange = useCallback((checked: string[]) => {
     checked.includes("isOffered") ? setIsOffered(true) : setIsOffered(false);
+    checked.includes("isLowPrice") ? setIsLowPrice(true) : setIsLowPrice(false);
 
     setStartIndex(0);
     setLastIndex(0);
@@ -65,6 +68,9 @@ const BrowsePage: FC = () => {
   const checkboxValue = [];
   if (isOffered) {
     checkboxValue.push("isOffered");
+  }
+  if (isLowPrice) {
+    checkboxValue.push("isLowPrice");
   }
 
   if (isLoading) {

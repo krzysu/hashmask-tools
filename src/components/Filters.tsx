@@ -88,6 +88,9 @@ export const Filters: FC<Props> = ({
           <WrapItem>
             <Checkbox value="isOffered">Is offered for sale</Checkbox>
           </WrapItem>
+          <WrapItem>
+            <Checkbox value="isLowPrice">Under 3Ξ</Checkbox>
+          </WrapItem>
         </Wrap>
       </CheckboxGroup>
     </Box>

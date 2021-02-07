@@ -43,7 +43,12 @@ const getOffersForPage = async (page: number): Promise<Offer[]> => {
   return orders.map((order) => {
     const decimals = order.paymentTokenContract?.decimals || 18;
     const price = Number(
-      ethers.utils.formatUnits(order.currentPrice?.toString() || "0", decimals)
+      Number(
+        ethers.utils.formatUnits(
+          order.currentPrice?.toString() || "0",
+          decimals
+        )
+      ).toFixed(4)
     );
 
     return {
@@ -54,7 +59,7 @@ const getOffersForPage = async (page: number): Promise<Offer[]> => {
   });
 };
 
-const PAGES_LENGTH = 120;
+const PAGES_LENGTH = 150;
 
 const main = async () => {
   const PAGES = Array.from({ length: PAGES_LENGTH }, (_, i) => i + 1);

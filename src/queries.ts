@@ -48,6 +48,7 @@ type QueryParams = {
   startIndex?: number;
   sortBy?: SortBy;
   isOffered?: boolean;
+  isLowPrice?: boolean;
 };
 
 type QueryResponse = {
@@ -61,6 +62,7 @@ export const queryMasks = ({
   startIndex = 0,
   sortBy = "default",
   isOffered,
+  isLowPrice,
 }: QueryParams): QueryResponse => {
   let base = Object.keys(minMasksDB);
 
@@ -84,6 +86,9 @@ export const queryMasks = ({
 
   if (isOffered) {
     base = base.filter((id) => !!offersDB[id]);
+  }
+  if (isLowPrice) {
+    base = base.filter((id) => (!!offersDB[id] ? offersDB[id] < 3 : false));
   }
 
   const masks = base
