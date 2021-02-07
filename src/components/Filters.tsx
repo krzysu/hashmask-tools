@@ -86,7 +86,7 @@ export const Filters: FC<Props> = ({
       <CheckboxGroup onChange={onCheckboxChange} value={checkboxValue}>
         <Wrap spacing="4">
           <WrapItem>
-            <Checkbox value="isOffered">Is offered for sale [TODO]</Checkbox>
+            <Checkbox value="isOffered">Is offered for sale</Checkbox>
           </WrapItem>
         </Wrap>
       </CheckboxGroup>

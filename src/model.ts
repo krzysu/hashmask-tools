@@ -1,5 +1,5 @@
 import { allTraits } from "./stats";
-import { minMasksDB, sameTraitDB } from "./db";
+import { minMasksDB, sameTraitDB, offersDB } from "./db";
 import { ViewMask, MinifiedMask, Traits } from "../shared/types";
 
 const decode = (traitName: Traits) => (traitIndex: number): string =>
@@ -22,7 +22,7 @@ export const buildMask = (id: string): ViewMask => {
     item: decode("item")(minMask[6]),
     score: minMask[7],
     lastPrice: undefined,
-    offeredPrice: undefined,
+    offeredPrice: offersDB[id],
   };
 };
 

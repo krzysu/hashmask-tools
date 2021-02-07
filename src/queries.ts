@@ -1,5 +1,5 @@
 import { ViewMask } from "../shared/types";
-import { minMasksDB } from "./db";
+import { minMasksDB, offersDB } from "./db";
 import { buildMask } from "./model";
 
 const BATCH_SIZE = 10;
@@ -60,6 +60,7 @@ export const queryMasks = ({
   filterValues,
   startIndex = 0,
   sortBy = "default",
+  isOffered,
 }: QueryParams): QueryResponse => {
   let base = Object.keys(minMasksDB);
 
@@ -81,9 +82,9 @@ export const queryMasks = ({
     base = base.filter((id) => minMasksDB[id][6] === Number(filterValues.item));
   }
 
-  // if (isOffered) {
-  //   base = base.filter((id) => !!offersDB[id]);
-  // }
+  if (isOffered) {
+    base = base.filter((id) => !!offersDB[id]);
+  }
 
   const masks = base
     .map((id) => buildMask(id))

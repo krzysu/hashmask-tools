@@ -54,9 +54,11 @@ const getOffersForPage = async (page: number): Promise<Offer[]> => {
   });
 };
 
+const PAGES_LENGTH = 120;
+
 const main = async () => {
-  const PAGES = Array.from({ length: 100 }, (_, i) => i + 1);
-  const DELAY = 600;
+  const PAGES = Array.from({ length: PAGES_LENGTH }, (_, i) => i + 1);
+  const DELAY = 550;
 
   const offers = await Promise.all(
     PAGES.map(async (page, index) => {
