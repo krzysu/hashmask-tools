@@ -6,6 +6,7 @@ import { Box, Flex, Heading, Spinner } from "@chakra-ui/core";
 import { MaskHero } from "../../components/MaskHero";
 import { MaskList } from "../../components/MaskList";
 import { buildMask, buildSameTraitMasks } from "../../model";
+import { totalSameTraitMasks } from "../../stats";
 
 const MaskPage: FC = () => {
   const { query } = useRouter();
@@ -39,8 +40,10 @@ const MaskPage: FC = () => {
 
       {sameTraitMasks.length > 0 && (
         <Box mb="12">
-          <Heading mb="8">{`Hashmasks with the same traits (${sameTraitMasks.length})`}</Heading>
-          <MaskList masks={sameTraitMasks.slice(0, 50)} />
+          <Heading mb="8">{`Hashmasks with the same traits (${totalSameTraitMasks(
+            mask.id
+          )})`}</Heading>
+          <MaskList masks={sameTraitMasks} />
         </Box>
       )}
     </>

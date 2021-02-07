@@ -33,7 +33,7 @@ const TOTAL_MASKS = 16384;
 const ALL_MASK_IDS = [...Array(TOTAL_MASKS).keys()].map((i) => i.toString());
 
 const FAILED_IDS = [];
-const BATCH = [8000, 9000];
+const BATCH = [9000, 10000];
 const DELAY = 1000;
 
 const main = async () => {

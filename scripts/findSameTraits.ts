@@ -1,5 +1,5 @@
 import { saveToFile } from "./shared/saveToFile";
-import { Mask } from "../shared/types";
+import { Mask, Similarity, Traits } from "../shared/types";
 
 const maskDbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
 
@@ -20,7 +20,7 @@ const isEqual = (obj1: any, obj2: any) => {
     return false;
   }
   for (let i = 0; i < props1.length; i++) {
-    let prop = props1[i] as keyof Mask;
+    let prop = props1[i] as Traits;
 
     if (obj1[prop] !== obj2[prop]) {
       return false;
@@ -46,9 +46,18 @@ const compareMaskToOthers = (
   });
 };
 
-const prepareToSave = (id: string, similarityData: string[]) => {
+const prepareToSave = (
+  id: string,
+  similarityData: string[]
+): Record<string, Similarity> => {
   return {
-    [id]: similarityData.map((s: string) => Number(s)).sort(),
+    [id]: {
+      total: similarityData.length,
+      ids: similarityData
+        .map((s: string) => Number(s))
+        .sort((a, b) => a - b)
+        .slice(0, 20),
+    },
   };
 };
 

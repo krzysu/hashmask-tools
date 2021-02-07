@@ -29,7 +29,7 @@ export const buildMask = (id: string): ViewMask => {
 export const formatPrice = (price: number): string => `${price}Ξ`;
 
 export const buildSameTraitMasks = (id: string): ViewMask[] => {
-  return sameTraitDB[id].map((sameTraitId) =>
+  return sameTraitDB[id].ids.map((sameTraitId) =>
     buildMask(sameTraitId.toString())
   );
 };

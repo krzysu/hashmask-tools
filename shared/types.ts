@@ -38,3 +38,8 @@ export type MinifiedMask = [
 ];
 
 export type MinifiedMasks = Record<string, MinifiedMask>;
+
+export type Similarity = {
+  total: number;
+  ids: number[];
+};

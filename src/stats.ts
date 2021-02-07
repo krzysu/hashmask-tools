@@ -1,9 +1,12 @@
-import statDB from "../db/stats.json";
+import { sameTraitDB, statsDB } from "./db";
 
 export const allTraits = {
-  character: statDB.characterStats.map((i) => i.character),
-  mask: statDB.maskStats.map((i) => i.mask),
-  eyes: statDB.eyesStats.map((i) => i.eyes),
-  skin: statDB.skinStats.map((i) => i.skin),
-  item: statDB.itemStats.map((i) => i.item),
+  character: statsDB.characterStats.map((i) => i.character),
+  mask: statsDB.maskStats.map((i) => i.mask),
+  eyes: statsDB.eyesStats.map((i) => i.eyes),
+  skin: statsDB.skinStats.map((i) => i.skin),
+  item: statsDB.itemStats.map((i) => i.item),
 };
+
+export const totalSameTraitMasks = (id: string): number =>
+  sameTraitDB[id].total;
