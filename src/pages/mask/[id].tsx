@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Box, Flex, Heading, Spinner } from "@chakra-ui/core";
+import { Box, Flex, Spinner } from "@chakra-ui/core";
 
 import { MaskHero } from "../../components/MaskHero";
-import { MaskList } from "../../components/MaskList";
+import { MaskListWithSorting } from "../../components/MaskListWithSorting";
 import { buildMask, buildSameTraitMasks } from "../../model";
 
 const MaskPage: FC = () => {
@@ -38,10 +38,11 @@ const MaskPage: FC = () => {
       </Box>
 
       {sameTraitMasks.length > 0 && (
-        <Box mb="12">
-          <Heading mb="8">{`With the same traits (${sameTraitMasks.length})`}</Heading>
-          <MaskList masks={sameTraitMasks.slice(0, 20)} />
-        </Box>
+        <MaskListWithSorting
+          heading={`With the same traits (${sameTraitMasks.length})`}
+          masks={sameTraitMasks}
+          limit={40}
+        />
       )}
     </>
   );

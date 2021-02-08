@@ -18,6 +18,20 @@ export type FilterValues = {
   item: string;
 };
 
+type QueryParams = {
+  filterValues: FilterValues;
+  startIndex?: number;
+  sortBy?: SortBy;
+  isOffered?: boolean;
+  isLowPrice?: boolean;
+};
+
+type QueryResponse = {
+  items: ViewMask[];
+  hasMore: boolean;
+  lastIndex: number;
+};
+
 const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
   if (sortBy === "id") {
     return Number(a.id) - Number(b.id);
@@ -41,20 +55,6 @@ const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
   }
 
   return 1;
-};
-
-type QueryParams = {
-  filterValues: FilterValues;
-  startIndex?: number;
-  sortBy?: SortBy;
-  isOffered?: boolean;
-  isLowPrice?: boolean;
-};
-
-type QueryResponse = {
-  items: ViewMask[];
-  hasMore: boolean;
-  lastIndex: number;
 };
 
 export const queryMasks = ({
