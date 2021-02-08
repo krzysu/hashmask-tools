@@ -1,12 +1,13 @@
 import { allTraits } from "./stats";
-import { minMasksDB, sameTraitDB, offersDB } from "./db";
-import { ViewMask, MinifiedMask, Traits } from "../shared/types";
+import { minMasksDB, offersDB } from "./db";
+import { getSameTraitMaskIds } from "./sameTraits";
+import { ViewMask, Traits } from "../shared/types";
 
 const decode = (traitName: Traits) => (traitIndex: number): string =>
   allTraits[traitName][traitIndex];
 
 export const buildMask = (id: string): ViewMask => {
-  const minMask = minMasksDB[id] as MinifiedMask;
+  const minMask = minMasksDB[id];
 
   if (!minMask) {
     throw Error(`Mask with id "${id}" not found`);
@@ -29,7 +30,6 @@ export const buildMask = (id: string): ViewMask => {
 export const formatPrice = (price: number): string => `${price}Ξ`;
 
 export const buildSameTraitMasks = (id: string): ViewMask[] => {
-  return sameTraitDB[id].ids.map((sameTraitId) =>
-    buildMask(sameTraitId.toString())
-  );
+  const sameTraitMaskIds = getSameTraitMaskIds(id);
+  return sameTraitMaskIds.map((sameTraitId) => buildMask(sameTraitId));
 };

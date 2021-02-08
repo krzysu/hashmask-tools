@@ -1,5 +1,5 @@
 import { Traits } from "../shared/types";
-import { sameTraitDB, statsDB } from "./db";
+import { statsDB } from "./db";
 
 export const allTraits = {
   character: statsDB.character.map((i) => i.name),
@@ -11,6 +11,3 @@ export const allTraits = {
 
 export const getTraitTotal = (traitName: Traits) => (traitValue: string) =>
   statsDB[traitName].find((item) => item.name === traitValue)?.count || 0;
-
-export const totalSameTraitMasks = (id: string): number =>
-  sameTraitDB[id].total;

@@ -4,11 +4,10 @@ TODO
 
 - download all mask images
 - run image comparison
-- build browse masks page
+- add price and score filters
 - add collections
 - use more traits from spreadsheet
 - connect opensea API to get prices
-- display offered price
 - opensea referal
 
 ### Resources
