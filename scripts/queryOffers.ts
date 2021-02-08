@@ -59,7 +59,7 @@ const getOffersForPage = async (page: number): Promise<Offer[]> => {
   });
 };
 
-const PAGES_LENGTH = 220;
+const PAGES_LENGTH = 200;
 
 const main = async () => {
   const PAGES = Array.from({ length: PAGES_LENGTH }, (_, i) => i + 1);
@@ -74,7 +74,11 @@ const main = async () => {
     })
   );
 
-  const db = offers.flat().reduce((acc, { id, price, symbol }): Record<
+  const offersReversed = [...offers.flat()].reverse();
+
+  console.log(`Found ${offersReversed.length} offers`);
+
+  const db = offersReversed.reduce((acc, { id, price, symbol }): Record<
     string,
     number
   > => {
@@ -85,6 +89,8 @@ const main = async () => {
       [id]: price,
     };
   }, {});
+
+  console.log(`Saving ${Object.keys(db).length} unique offers`);
 
   saveToFile(db, DB_NAME);
 };
