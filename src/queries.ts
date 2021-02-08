@@ -2,7 +2,7 @@ import { ViewMask } from "../shared/types";
 import { minMasksDB, offersDB } from "./db";
 import { buildMask } from "./model";
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 20;
 
 export const ANY_VALUE = "any";
 
@@ -88,7 +88,8 @@ export const queryMasks = ({
     base = base.filter((id) => !!offersDB[id]);
   }
   if (isLowPrice) {
-    base = base.filter((id) => (!!offersDB[id] ? offersDB[id] < 3 : false));
+    base = base.filter((id) => (!!offersDB[id] ? offersDB[id] <= 3 : false));
+    base = base.filter((id) => minMasksDB[id][7] <= 800);
   }
 
   const masks = base

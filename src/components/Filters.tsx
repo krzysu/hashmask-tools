@@ -89,7 +89,9 @@ export const Filters: FC<Props> = ({
             <Checkbox value="isOffered">Is offered for sale</Checkbox>
           </WrapItem>
           <WrapItem>
-            <Checkbox value="isLowPrice">Under 3Ξ</Checkbox>
+            <Checkbox value="isLowPrice">
+              Under 3Ξ price, under 800 score
+            </Checkbox>
           </WrapItem>
         </Wrap>
       </CheckboxGroup>

@@ -59,7 +59,7 @@ const getOffersForPage = async (page: number): Promise<Offer[]> => {
   });
 };
 
-const PAGES_LENGTH = 180;
+const PAGES_LENGTH = 220;
 
 const main = async () => {
   const PAGES = Array.from({ length: PAGES_LENGTH }, (_, i) => i + 1);
