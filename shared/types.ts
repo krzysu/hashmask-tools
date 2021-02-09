@@ -39,12 +39,12 @@ export type MinifiedMask = [
 
 export type MinifiedMasks = Record<string, MinifiedMask>;
 
-export type Similarity = {
-  total: number;
-  ids: number[];
-};
-
 export type StatItem = {
   name: string;
   count: number;
+};
+
+export type Similarity = {
+  id: string;
+  distance: number;
 };

@@ -1,5 +1,5 @@
 import { allTraits } from "./stats";
-import { minMasksDB, offersDB } from "./db";
+import { minMasksDB, offersDB, similarImageDb } from "./db";
 import { getSameTraitMaskIds } from "./sameTraits";
 import { ViewMask, Traits } from "../shared/types";
 
@@ -32,4 +32,10 @@ export const formatPrice = (price: number): string => `${price}Ξ`;
 export const buildSameTraitMasks = (id: string): ViewMask[] => {
   const sameTraitMaskIds = getSameTraitMaskIds(id);
   return sameTraitMaskIds.map((sameTraitId) => buildMask(sameTraitId));
+};
+
+export const buildSimilarImageMasks = (id: string): ViewMask[] => {
+  return similarImageDb[id]
+    ? similarImageDb[id].map((similarity) => buildMask(similarity.id))
+    : [];
 };

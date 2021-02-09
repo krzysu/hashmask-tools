@@ -11,6 +11,7 @@ import {
   getOtherMaskIds,
   revealedMaskIndex,
 } from "./shared/maskUtils";
+import { Similarity } from "../shared/types";
 
 const DB_NAME = "similarImage.json";
 const dbData = require(`../db/${DB_NAME}`);
@@ -33,11 +34,6 @@ const compareMaskImages = (id1: string, id2: string) => {
     console.log(err);
     return -1;
   }
-};
-
-type Similarity = {
-  id: string;
-  distance: number;
 };
 
 const compareMaskToOthers = (
@@ -64,9 +60,7 @@ const prepareToSave = (id: string, similarityData: Similarity[]) => {
     .slice(0, TOTAL_SIMILARITIES_TO_STORE);
 
   return {
-    [id]: {
-      similarTo,
-    },
+    [id]: similarTo,
   };
 };
 

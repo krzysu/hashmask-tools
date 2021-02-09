@@ -5,7 +5,11 @@ import { Box, Flex, Spinner } from "@chakra-ui/core";
 
 import { MaskHero } from "../../components/MaskHero";
 import { MaskListWithSorting } from "../../components/MaskListWithSorting";
-import { buildMask, buildSameTraitMasks } from "../../model";
+import {
+  buildMask,
+  buildSameTraitMasks,
+  buildSimilarImageMasks,
+} from "../../model";
 
 const MaskPage: FC = () => {
   const { query } = useRouter();
@@ -26,6 +30,7 @@ const MaskPage: FC = () => {
   }
 
   const sameTraitMasks = buildSameTraitMasks(id);
+  const similarImageMasks = buildSimilarImageMasks(id);
 
   return (
     <>
@@ -39,9 +44,16 @@ const MaskPage: FC = () => {
 
       {sameTraitMasks.length > 0 && (
         <MaskListWithSorting
-          heading={`With the same traits (${sameTraitMasks.length})`}
+          heading={`Same traits (${sameTraitMasks.length})`}
           masks={sameTraitMasks}
           limit={40}
+        />
+      )}
+
+      {similarImageMasks.length > 0 && (
+        <MaskListWithSorting
+          heading={`Similar image`}
+          masks={similarImageMasks}
         />
       )}
     </>
