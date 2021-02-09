@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import Head from "next/head";
-import { Box, Heading } from "@chakra-ui/core";
+import NextLink from "next/link";
+import { Box, Heading, Link, Text } from "@chakra-ui/core";
 
 const Index: FC = () => {
   return (
@@ -11,6 +12,15 @@ const Index: FC = () => {
 
       <Box>
         <Heading mb="8">HashmaskTools</Heading>
+
+        <Text mb="2">Work in progress</Text>
+        <Text>
+          Browse all hashmasks{" "}
+          <NextLink href={"/browse"} passHref>
+            <Link color="cyan.800">here</Link>
+          </NextLink>
+          .
+        </Text>
       </Box>
     </>
   );

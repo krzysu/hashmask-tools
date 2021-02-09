@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from "react";
 import Head from "next/head";
+import { Box } from "@chakra-ui/core";
 
 import { useWatchlist } from "../hooks/useWatchlist";
 import { MaskListWithSorting } from "../components/MaskListWithSorting";
@@ -18,7 +19,9 @@ const WatchlistPage: FC = () => {
         <title>{`HashmaskTools - Watchlist`}</title>
       </Head>
 
-      <MaskListWithSorting heading="Watchlist" masks={watchlistMasks} />
+      <Box>
+        <MaskListWithSorting heading="Watchlist" masks={watchlistMasks} />
+      </Box>
     </>
   );
 };

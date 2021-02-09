@@ -13,7 +13,6 @@ export const Footer: FC<Props> = ({ buildDate }) => {
         <Link href="https://twitter.com/krzysu" isExternal>
           @krzysu
         </Link>{" "}
-        - All rights reserved.
       </Text>
       {buildDate && <Text>Last update - {buildDate}</Text>}
     </Box>
