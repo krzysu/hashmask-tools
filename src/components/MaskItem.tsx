@@ -6,6 +6,7 @@ import NextLink from "next/link";
 import { MaskImage } from "./MaskImage";
 import { WatchlistIcon } from "./WatchlistIcon";
 import { formatPrice } from "../model";
+import { getOpenSeaUrl } from "../links";
 import { ViewMask } from "../../shared/types";
 
 type Props = {
@@ -42,11 +43,7 @@ export const MaskItem: FC<Props> = ({ mask }) => (
         </Link>
       </Box>
       <Box>
-        <Link
-          href={`https://opensea.io/assets/0xc2c747e0f7004f9e8817db2ca4997657a7746928/${mask.id}`}
-          isExternal
-          color="cyan.800"
-        >
+        <Link href={getOpenSeaUrl(mask.id)} isExternal color="cyan.800">
           OpenSea
           <ExternalLinkIcon mx="2px" />
         </Link>

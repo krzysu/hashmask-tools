@@ -14,6 +14,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MaskImage } from "./MaskImage";
 import { WatchlistButton } from "./WatchlistButton";
 import { formatPrice } from "../model";
+import { getOpenSeaUrl } from "../links";
 import { ViewMask } from "../../shared/types";
 
 type Props = {
@@ -52,11 +53,7 @@ export const MaskHero: FC<Props> = ({ mask }) => (
             </Link>
           </Box>
           <Box>
-            <Link
-              href={`https://opensea.io/assets/0xc2c747e0f7004f9e8817db2ca4997657a7746928/${mask.id}`}
-              isExternal
-              color="cyan.800"
-            >
+            <Link href={getOpenSeaUrl(mask.id)} isExternal color="cyan.800">
               See on OpenSea
               <ExternalLinkIcon mx="2px" />
             </Link>
