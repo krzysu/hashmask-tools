@@ -43,8 +43,3 @@ export type StatItem = {
   name: string;
   count: number;
 };
-
-export type Similarity = {
-  id: string;
-  distance: number;
-};

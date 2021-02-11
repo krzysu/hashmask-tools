@@ -36,6 +36,6 @@ export const buildSameTraitMasks = (id: string): ViewMask[] => {
 
 export const buildSimilarImageMasks = (id: string): ViewMask[] => {
   return similarImageDb[id]
-    ? similarImageDb[id].map((similarity) => buildMask(similarity.id))
+    ? similarImageDb[id].map((id) => buildMask(id.toString()))
     : [];
 };

@@ -42,19 +42,23 @@ const MaskPage: FC = () => {
         <MaskHero mask={mask} />{" "}
       </Box>
 
-      {sameTraitMasks.length > 0 && (
-        <MaskListWithSorting
-          heading={`Same traits (${sameTraitMasks.length})`}
-          masks={sameTraitMasks}
-          limit={40}
-        />
+      {similarImageMasks.length > 0 && (
+        <Box mb="12">
+          <MaskListWithSorting
+            heading={`Similar image`}
+            masks={similarImageMasks}
+          />
+        </Box>
       )}
 
-      {similarImageMasks.length > 0 && (
-        <MaskListWithSorting
-          heading={`Similar image`}
-          masks={similarImageMasks}
-        />
+      {sameTraitMasks.length > 0 && (
+        <Box mb="12">
+          <MaskListWithSorting
+            heading={`Same traits (${sameTraitMasks.length})`}
+            masks={sameTraitMasks}
+            limit={20}
+          />
+        </Box>
       )}
     </>
   );
