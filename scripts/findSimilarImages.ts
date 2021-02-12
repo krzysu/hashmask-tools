@@ -9,10 +9,21 @@ import {
   revealedMaskIndex,
 } from "./shared/maskUtils";
 
+type SameTraits = {
+  total: number;
+  ids: number[];
+};
+
 const DB_NAME = "similarImage.json";
 const dbData = require(`../db/${DB_NAME}`);
+const sameTraitDB = require(`../db/sameTrait.json`) as Record<
+  string,
+  SameTraits
+>;
 
 const folderPath = path.resolve(__dirname, "../public/assets2");
+
+const TOTAL_SIMILARITIES_TO_STORE = 20;
 
 const loadImageForMaskId = (id: string) => {
   const imagePath1 = `${folderPath}/${revealedMaskIndex(id)}.png`;
@@ -66,8 +77,6 @@ const compareMaskToOthers = (
   });
 };
 
-const TOTAL_SIMILARITIES_TO_STORE = 20;
-
 const prepareToSave = (id: string, similarityData: Similarity[]) => {
   const similarTo = similarityData
     .sort((a, b) => {
@@ -80,12 +89,25 @@ const prepareToSave = (id: string, similarityData: Similarity[]) => {
   };
 };
 
-const BATCH = [0, 10];
-const IDS = ["6718"];
+const maskHasSimilarImages = (id: string) => !dbData[id];
+
+const findMasksWithSameTraitLessThan = (maskCount: number) =>
+  Object.keys(sameTraitDB).filter((id) => sameTraitDB[id].total < maskCount);
 
 const main = async () => {
-  const result = ALL_MASK_IDS.slice(...BATCH).reduce((acc, maskToCompare) => {
-    // const result = IDS.reduce((acc, maskToCompare) => {
+  // get mask ids with less than N same trait masks
+  // check if not similar images found yet
+  // run the script for first N
+  // manualy rerun the script
+
+  const candidatesToRunTheScript = findMasksWithSameTraitLessThan(3); // ALL_MASK_IDS.slice(0, 100);
+  const maskIdsToRunScript = candidatesToRunTheScript
+    .filter(maskHasSimilarImages)
+    .slice(0, 4);
+
+  console.info(`Running for masks: `, maskIdsToRunScript);
+
+  const result = maskIdsToRunScript.reduce((acc, maskToCompare) => {
     console.info(`Comparing mask #${maskToCompare}`);
 
     const otherMaskIds = getOtherMaskIds(maskToCompare);

@@ -38,8 +38,8 @@ const DELAY = 1000;
 
 const main = async () => {
   await Promise.all(
-    ALL_MASK_IDS.slice(...BATCH).map(async (id, index) => {
-      // FAILED_IDS.map(async (id, index) => {
+    // ALL_MASK_IDS.slice(...BATCH).map(async (id, index) => {
+    FAILED_IDS.map(async (id, index) => {
       const fullMask = {
         id,
         ...dbData[id],

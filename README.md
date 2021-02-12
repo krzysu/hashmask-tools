@@ -2,13 +2,11 @@
 
 TODO
 
-- download all mask images
 - run image comparison
 - add price and score filters
 - add collections
 - use more traits from spreadsheet
-- connect opensea API to get prices
-- opensea referal
+- connect opensea API to get prices (bestBid, bestAsk)
 
 ### Resources
 
