@@ -20,6 +20,10 @@ const items = [
     label: "Browse",
   },
   {
+    href: "/collections",
+    label: "Collections",
+  },
+  {
     href: "/watchlist",
     label: "Watchlist",
   },

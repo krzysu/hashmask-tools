@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, ReactNode, useCallback, useEffect, useState } from "react";
 import { Flex, Heading } from "@chakra-ui/core";
 import { SortByItem } from "./Filters/SortByItem";
 import { MaskList } from "./MaskList";
@@ -8,16 +8,29 @@ import { ViewMask } from "../../shared/types";
 
 type Props = {
   masks: ViewMask[];
-  heading: string;
+  heading?: string;
+  headingComponent?: ReactNode;
   limit?: number;
+  defaultSortBy?: SortBy;
 };
 
 const sliceMaybe = (list: ViewMask[], limit?: number) =>
   limit ? list.slice(0, limit) : list;
 
-export const MaskListWithSorting: FC<Props> = ({ masks, heading, limit }) => {
-  const [renderedMasks, setRenderedMasks] = useState<ViewMask[]>(masks);
-  const [sortBy, setSortBy] = useState<SortBy>("default");
+export const MaskListWithSorting: FC<Props> = ({
+  masks,
+  heading,
+  headingComponent,
+  limit,
+  defaultSortBy = "default",
+}) => {
+  const [renderedMasks, setRenderedMasks] = useState<ViewMask[]>([]);
+  const [sortBy, setSortBy] = useState<SortBy>(defaultSortBy);
+
+  useEffect(() => {
+    setRenderedMasks(sortMasks(masks, defaultSortBy));
+    setSortBy(defaultSortBy);
+  }, [masks, defaultSortBy]);
 
   const handleSortChange = useCallback(
     (newSortBy) => {
@@ -34,12 +47,14 @@ export const MaskListWithSorting: FC<Props> = ({ masks, heading, limit }) => {
         pb="8"
         flexDirection={["column", "row"]}
         justifyContent="space-between"
+        alignItems="center"
       >
-        <Heading mb={["6", "0"]}>{heading}</Heading>
+        {heading && <Heading mb={["6", "0"]}>{heading}</Heading>}
+        {headingComponent}
         <SortByItem
           value={sortBy}
           onValueChange={handleSortChange}
-          withDefault
+          withDefault={defaultSortBy === "default"}
         />
       </Flex>
       <MaskList masks={sliceMaybe(renderedMasks, limit)} />
