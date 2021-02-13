@@ -1,5 +1,6 @@
-import React, { FC, useCallback, useMemo, useState } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { Box, Flex, Heading, Text } from "@chakra-ui/core";
 import { FilterItem } from "../components/Filters/FilterItem";
 import { MaskListWithSorting } from "../components/MaskListWithSorting";
@@ -9,15 +10,14 @@ import {
   Collection,
   collectionToNameMap,
 } from "../collections";
-import { ViewMask } from "../../shared/types";
 
-const DEFAULT_COLLECTION: Collection = "crown";
+const COLLECTION_QUERY_PARAM = "c";
 
 const Index: FC = () => {
-  const [masks, setMasks] = useState<ViewMask[]>(
-    buildMasksFromCollection(DEFAULT_COLLECTION)
-  );
-  const [collection, setCollection] = useState<Collection>(DEFAULT_COLLECTION);
+  const router = useRouter();
+
+  const collection = (router.query[COLLECTION_QUERY_PARAM] || "") as Collection;
+  const masks = buildMasksFromCollection(collection);
 
   const maskSelectItems = useMemo(
     () => buildCollectionSelectItems("masks"),
@@ -34,8 +34,10 @@ const Index: FC = () => {
   );
 
   const handleChange = useCallback((name) => {
-    setCollection(name);
-    setMasks(buildMasksFromCollection(name));
+    router.replace({
+      pathname: router.pathname,
+      query: { [COLLECTION_QUERY_PARAM]: name },
+    });
   }, []);
 
   return (
