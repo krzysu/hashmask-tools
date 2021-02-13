@@ -19,6 +19,7 @@ const BrowsePage: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [masks, setMasks] = useState<ViewMask[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [total, setTotal] = useState<number>(0);
   const [lastIndex, setLastIndex] = useState<number>(0);
   const [startIndex, setStartIndex] = useState<number>(0);
   const [filterValues, setFilterValues] = useState<FilterValues>(
@@ -29,7 +30,7 @@ const BrowsePage: FC = () => {
   const [sortBy, setSortBy] = useState<SortBy>("id");
 
   useEffect(() => {
-    const { items, hasMore, lastIndex } = queryMasks({
+    const { items, total, hasMore, lastIndex } = queryMasks({
       filterValues,
       startIndex,
       sortBy,
@@ -38,6 +39,7 @@ const BrowsePage: FC = () => {
     });
     setMasks(items);
     setHasMore(hasMore);
+    setTotal(total);
     setLastIndex(lastIndex);
     setIsLoading(false);
   }, [filterValues, isOffered, isLowPrice, sortBy, startIndex]);
@@ -102,7 +104,7 @@ const BrowsePage: FC = () => {
           pb="8"
         >
           <Text size="sm" fontWeight="bold">
-            Found TODO items
+            {`Found ${total} items`}
           </Text>
           <Box pb={["4", "0"]}>
             <SortByItem value={sortBy} onValueChange={setSortBy} />

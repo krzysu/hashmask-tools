@@ -13,64 +13,65 @@ export type Collection =
   | "rosetta"
   | "fibonacci"
   | "chess"
-  | "orb"
-  | "cards";
+  | "voyager"
+  | "cards"
+  | "phoenix"
+  | "mantra";
 
-type Item = {
-  value: Collection;
+type Category = "masks" | "eyes" | "backgrounds" | "items";
+
+const categoryMap: Record<Category, Collection[]> = {
+  masks: ["halo", "crown", "tears"],
+  eyes: ["flowers", "hearts"],
+  backgrounds: [
+    "chess",
+    "cards",
+    "poem",
+    "beethoven",
+    "rosetta",
+    "fibonacci",
+    "mantra",
+  ],
+  items: ["phoenix", "voyager"],
+};
+
+export const collectionToNameMap: Record<Collection, string> = {
+  flowers: "Flower Eyes",
+  hearts: "Heart Eyes",
+  poem: "Chinese Poem",
+  tears: "Tear drop",
+  beethoven: "Beethoven",
+  halo: "Halo",
+  crown: "Crown",
+  rosetta: "Rosetta",
+  fibonacci: "Fibonacci",
+  chess: "Chess piece",
+  voyager: "Voyager Golden Record",
+  cards: "Playing cards",
+  phoenix: "Phoenix",
+  mantra: "The Pavamana Mantra",
+};
+
+type SelectItem = {
+  value: Collection | "";
   label: string;
 };
 
-export const buildCollectionSelectItems = (): Item[] => {
+export const buildCollectionSelectItems = (
+  category: Category
+): SelectItem[] => {
+  const collections = categoryMap[category];
+  const empty = {
+    value: "",
+    label: "-- Select --",
+  } as SelectItem;
+
   return [
-    {
-      value: "flowers",
-      label: "Flower Eyes",
-    },
-    {
-      value: "hearts",
-      label: "Heart Eyes",
-    },
-    {
-      value: "poem",
-      label: "Chinese Poem",
-    },
-    {
-      value: "tears",
-      label: "Tear drops",
-    },
-    {
-      value: "beethoven",
-      label: "Beethoven",
-    },
-    {
-      value: "halo",
-      label: "Halo",
-    },
-    {
-      value: "crown",
-      label: "Crown",
-    },
-    {
-      value: "rosetta",
-      label: "Rosetta",
-    },
-    {
-      value: "fibonacci",
-      label: "Fibonacci",
-    },
-    {
-      value: "chess",
-      label: "Chess",
-    },
-    {
-      value: "orb",
-      label: "Orb",
-    },
-    {
-      value: "cards",
-      label: "Cards",
-    },
+    empty,
+    ...collections.map((collection) => ({
+      value: collection,
+      label: collectionToNameMap[collection],
+    })),
   ];
 };
 

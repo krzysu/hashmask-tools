@@ -47,7 +47,7 @@ export const MaskListWithSorting: FC<Props> = ({
         pb="8"
         flexDirection={["column", "row"]}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={["flex-start", "center"]}
       >
         {heading && <Heading mb={["6", "0"]}>{heading}</Heading>}
         {headingComponent}

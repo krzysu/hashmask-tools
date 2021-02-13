@@ -29,6 +29,7 @@ type QueryParams = {
 type QueryResponse = {
   items: ViewMask[];
   hasMore: boolean;
+  total: number;
   lastIndex: number;
 };
 
@@ -100,6 +101,7 @@ export const queryMasks = ({
   return {
     items: masks,
     hasMore: base.length > masks.length,
+    total: base.length,
     lastIndex: startIndex + BATCH_SIZE,
   };
 };
