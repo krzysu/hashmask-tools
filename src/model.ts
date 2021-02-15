@@ -1,5 +1,5 @@
 import { allTraits } from "./stats";
-import { minMasksDB, offersDB, similarImageDb } from "./db";
+import { minMasksDB, openseaDB, similarImageDb } from "./db";
 import { getSameTraitMaskIds } from "./sameTraits";
 import { ViewMask, Traits } from "../shared/types";
 
@@ -8,6 +8,7 @@ const decode = (traitName: Traits) => (traitIndex: number): string =>
 
 export const buildMask = (id: string): ViewMask => {
   const minMask = minMasksDB[id];
+  const prices = openseaDB[id] || [0, 0];
 
   if (!minMask) {
     throw Error(`Mask with id "${id}" not found`);
@@ -22,8 +23,8 @@ export const buildMask = (id: string): ViewMask => {
     skin: decode("skin")(minMask[5]),
     item: decode("item")(minMask[6]),
     score: minMask[7],
-    lastPrice: undefined,
-    offeredPrice: offersDB[id],
+    lastPrice: prices[1] !== 0 ? prices[1] : undefined,
+    offeredPrice: prices[0] !== 0 ? prices[0] : undefined,
   };
 };
 

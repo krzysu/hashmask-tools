@@ -1,5 +1,5 @@
 import { ViewMask } from "../shared/types";
-import { minMasksDB, offersDB } from "./db";
+import { minMasksDB, openseaDB } from "./db";
 import { buildMask } from "./model";
 
 const BATCH_SIZE = 20;
@@ -86,10 +86,12 @@ export const queryMasks = ({
   }
 
   if (isOffered) {
-    base = base.filter((id) => !!offersDB[id]);
+    base = base.filter((id) => !!openseaDB[id] && openseaDB[id][0] > 0);
   }
   if (isLowPrice) {
-    base = base.filter((id) => (!!offersDB[id] ? offersDB[id] <= 3 : false));
+    base = base.filter((id) =>
+      !!openseaDB[id] ? openseaDB[id][0] > 0 && openseaDB[id][0] <= 3 : false
+    );
     base = base.filter((id) => minMasksDB[id][7] <= 800);
   }
 
