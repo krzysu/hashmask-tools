@@ -16,12 +16,13 @@ export type Collection =
   | "voyager"
   | "cards"
   | "phoenix"
-  | "mantra";
+  | "mantra"
+  | "mummy";
 
 type Category = "masks" | "eyes" | "backgrounds" | "items";
 
 const categoryMap: Record<Category, Collection[]> = {
-  masks: ["halo", "crown", "tears"],
+  masks: ["halo", "crown", "tears", "mummy"],
   eyes: ["flowers", "hearts"],
   backgrounds: [
     "chess",
@@ -50,6 +51,7 @@ export const collectionToNameMap: Record<Collection, string> = {
   cards: "Playing cards",
   phoenix: "Phoenix",
   mantra: "The Pavamana Mantra",
+  mummy: "Mummy",
 };
 
 type SelectItem = {
