@@ -14,12 +14,15 @@ const Index: FC = () => {
         <Heading mb="8">HashmaskTools</Heading>
 
         <Text mb="2">Work in progress</Text>
-        <Text>
+        <Text mb="2">
           Browse all hashmasks{" "}
           <NextLink href={"/browse"} passHref>
             <Link color="cyan.800">here</Link>
           </NextLink>
           .
+        </Text>
+        <Text mb="2" color="red.500">
+          Offered price and last price is currently disabled.
         </Text>
       </Box>
     </>
