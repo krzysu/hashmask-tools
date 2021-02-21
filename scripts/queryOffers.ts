@@ -3,7 +3,7 @@ import { OpenSeaPort, Network } from "opensea-js";
 import { OrderSide } from "opensea-js/lib/types";
 import { saveToFile } from "./shared/saveToFile";
 
-const DB_NAME = "offers.min.json";
+const DB_NAME = "opensea.json";
 const HASHMASK_CONTRACT_ADDRESS = "0xc2c747e0f7004f9e8817db2ca4997657a7746928";
 
 const provider = new ethers.providers.JsonRpcProvider(
@@ -26,44 +26,56 @@ const sleep = (ms: number) => {
   });
 };
 
+// const lastTimestamp = Date.now();
+
 const getOffersForPage = async (page: number): Promise<Offer[]> => {
-  const { orders } = await seaport.api.getOrders(
-    {
-      asset_contract_address: HASHMASK_CONTRACT_ADDRESS,
-      side: OrderSide.Sell,
-      limit: 50,
-    },
-    page
-  );
-
-  if (orders.length === 0) {
-    console.log(`No more orders`);
-  }
-
-  return orders.map((order) => {
-    const decimals = order.paymentTokenContract?.decimals || 18;
-    const price = Number(
-      Number(
-        ethers.utils.formatUnits(
-          order.currentPrice?.toString() || "0",
-          decimals
-        )
-      ).toFixed(4)
+  try {
+    const { orders } = await seaport.api.getOrders(
+      {
+        asset_contract_address: HASHMASK_CONTRACT_ADDRESS,
+        side: OrderSide.Sell,
+        limit: 50,
+        // listed_after: lastTimestamp,
+      },
+      page
     );
 
-    return {
-      id: order.metadata.asset.id,
-      price,
-      symbol: order.paymentTokenContract?.symbol || "",
-    };
-  });
+    if (orders.length === 0) {
+      console.log(`No more orders`);
+    }
+
+    return orders.map((order) => {
+      const decimals = order.paymentTokenContract?.decimals || 18;
+      const price = Number(
+        Number(
+          ethers.utils.formatUnits(
+            order.currentPrice?.toString() || "0",
+            decimals
+          )
+        ).toFixed(4)
+      );
+
+      return {
+        id: order.metadata.asset.id,
+        price,
+        symbol: order.paymentTokenContract?.symbol || "",
+      };
+    });
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
 };
 
 const PAGES_LENGTH = 200;
 
+type Offered = number; // only ETH
+type LastSale = number; // only ETH
+type MinPrices = [Offered, LastSale];
+
 const main = async () => {
   const PAGES = Array.from({ length: PAGES_LENGTH }, (_, i) => i + 1);
-  const DELAY = 550;
+  const DELAY = 1100;
 
   const offers = await Promise.all(
     PAGES.map(async (page, index) => {
@@ -80,13 +92,13 @@ const main = async () => {
 
   const db = offersReversed.reduce((acc, { id, price, symbol }): Record<
     string,
-    number
+    MinPrices
   > => {
     if (symbol !== "ETH") return acc;
 
     return {
       ...acc,
-      [id]: price,
+      [id]: [price, 0],
     };
   }, {});
 

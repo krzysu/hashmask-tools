@@ -90,7 +90,7 @@ export const Filters: FC<Props> = ({
           </WrapItem>
           <WrapItem>
             <Checkbox value="isLowPrice">
-              Under 3Ξ price, under 800 score
+              Under 4Ξ price, under 800 score
             </Checkbox>
           </WrapItem>
         </Wrap>

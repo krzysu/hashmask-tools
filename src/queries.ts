@@ -90,7 +90,7 @@ export const queryMasks = ({
   }
   if (isLowPrice) {
     base = base.filter((id) =>
-      !!openseaDB[id] ? openseaDB[id][0] > 0 && openseaDB[id][0] <= 3 : false
+      !!openseaDB[id] ? openseaDB[id][0] > 0 && openseaDB[id][0] <= 4 : false
     );
     base = base.filter((id) => minMasksDB[id][7] <= 800);
   }

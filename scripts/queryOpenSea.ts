@@ -64,34 +64,39 @@ const formatLastSale = (event: AssetEvent): Price => {
 const PAGES_LENGTH = 163; // 163
 const LIMIT = 50;
 const PAGES = Array.from({ length: PAGES_LENGTH }, (_, i) => i);
-const DELAY = 550;
+const DELAY = 1100;
 
 const getAssetsForPage = async (
   page: number,
   order: string
 ): Promise<AssetWithPrices[]> => {
-  const { assets } = await seaport.api.getAssets({
-    asset_contract_address: HASHMASK_CONTRACT_ADDRESS,
-    limit: LIMIT,
-    offset: page * LIMIT,
-    order_by: "eth_price", // created_date or eth_price
-    order_direction: order, // asc or desc
-  });
+  try {
+    const { assets } = await seaport.api.getAssets({
+      asset_contract_address: HASHMASK_CONTRACT_ADDRESS,
+      limit: LIMIT,
+      offset: page * LIMIT,
+      order_by: "eth_price", // created_date or eth_price
+      order_direction: order, // asc or desc
+    });
 
-  if (assets.length === 0) {
-    console.log(`No more assets`);
+    if (assets.length === 0) {
+      console.log(`No more assets`);
+    }
+
+    return assets.map((asset) => {
+      const { tokenId, sellOrders, lastSale } = asset;
+
+      return {
+        id: tokenId!,
+        offeredFor:
+          sellOrders && sellOrders[0] ? formatOrder(sellOrders[0]) : null,
+        lastSale: lastSale ? formatLastSale(lastSale) : null,
+      };
+    });
+  } catch (e) {
+    console.error(e);
+    return [];
   }
-
-  return assets.map((asset) => {
-    const { tokenId, sellOrders, lastSale } = asset;
-
-    return {
-      id: tokenId!,
-      offeredFor:
-        sellOrders && sellOrders[0] ? formatOrder(sellOrders[0]) : null,
-      lastSale: lastSale ? formatLastSale(lastSale) : null,
-    };
-  });
 };
 
 type Offered = number; // only ETH
@@ -149,6 +154,7 @@ const queryAndSave = async (order: string) => {
 };
 
 const main = async () => {
+  saveToFile({}, DB_NAME);
   await queryAndSave("asc");
   await queryAndSave("desc");
 };
