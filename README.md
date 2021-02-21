@@ -7,12 +7,17 @@ TODO
   - solve bids/auctions offered price
   - cross run with offers endpoint including last timestamp
 
+- automate price script
 - run image comparison (voyager discs)
 - add price and score filters
 - add 2 category collections - planets and egyptian signs
 - use more traits from spreadsheet (backgrounds)
-- connect opensea API to get prices (bestBid, bestAsk)
 - show which masks are in NTFX fund
+- add FAQ with:
+  - rarity score formula
+  - how often prices are updated
+  - collections DB
+  - disclaimer for referals and donations and loopring
 
 ### Subcategories of explicit traits
 

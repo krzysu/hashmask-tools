@@ -33,7 +33,10 @@ const sleep = (ms: number) => {
   });
 };
 
-const formatOrder = (order: Order): Price => {
+const formatOrder = (order: Order): Price | null => {
+  // not interested in auctions where reserve price not met
+  if (order.waitingForBestCounterOrder) return null;
+
   const decimals = order.paymentTokenContract?.decimals || 18;
   const price = Number(
     Number(

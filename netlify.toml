@@ -1,0 +1,6 @@
+[build]
+command = "yarn build"
+publish = "out/"
+
+[context.db]
+publish = "public/"
