@@ -13,7 +13,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
           <Grid minH="100vh" templateRows="auto 1fr auto">
             <Navigation />
             <Component {...pageProps} />
-            <Footer buildDate={pageProps.buildDate} />
+            <Footer />
           </Grid>
         </Container>
       </DataProvider>

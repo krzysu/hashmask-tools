@@ -4,16 +4,12 @@ TODO
 
 - automate price script - use https://db.hashmasktools.xyz/opensea.json
   - show when prices were last updated
-- run image comparison (voyager discs)
+- run image comparison
 - add price and score filters
 - add 2 category collections - planets and egyptian signs
 - use more traits from spreadsheet (backgrounds)
 - show which masks are in NTFX fund
-- add FAQ with:
-  - rarity score formula
-  - how often prices are updated
-  - collections DB
-  - disclaimer for referals and donations and loopring
+- register on opensea for referral link
 
 ### Subcategories of explicit traits
 
@@ -43,6 +39,7 @@ Similar projects
 - https://maskinson.netlify.app/analytics.html - Analytics
 - https://www.hashmaskfinder.com/
 - https://maskswap.xyz/#/
+- https://hashyverse.com/events
 
 MaskDAO
 

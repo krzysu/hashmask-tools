@@ -6,15 +6,12 @@ import { MaskList } from "../components/MaskList";
 import { Filters } from "../components/Filters";
 import { SortByItem } from "../components/Filters/SortByItem";
 import { useDataProvider } from "../context/DataProvider";
-import { ANY_VALUE, FilterValues, queryMasks, SortBy } from "../queries";
-
-const defaultFilterValues: FilterValues = {
-  character: ANY_VALUE,
-  mask: ANY_VALUE,
-  eyes: ANY_VALUE,
-  skin: ANY_VALUE,
-  item: ANY_VALUE,
-};
+import {
+  defaultFilterValues,
+  FilterValues,
+  queryMasks,
+  SortBy,
+} from "../queries";
 
 const BrowsePage: FC = () => {
   const { openseaDB } = useDataProvider();

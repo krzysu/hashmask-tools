@@ -18,9 +18,17 @@ export type FilterValues = {
   item: string;
 };
 
+export const defaultFilterValues: FilterValues = {
+  character: ANY_VALUE,
+  mask: ANY_VALUE,
+  eyes: ANY_VALUE,
+  skin: ANY_VALUE,
+  item: ANY_VALUE,
+};
+
 type QueryParams = {
   openseaDB: Record<string, number[]>;
-  filterValues: FilterValues;
+  filterValues?: FilterValues;
   startIndex?: number;
   sortBy?: SortBy;
   isOffered?: boolean;
@@ -61,7 +69,7 @@ const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
 
 export const queryMasks = ({
   openseaDB = {},
-  filterValues,
+  filterValues = defaultFilterValues,
   startIndex = 0,
   sortBy = "default",
   isOffered,
