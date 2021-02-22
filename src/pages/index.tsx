@@ -22,7 +22,7 @@ const Index: FC = () => {
           .
         </Text>
         <Text mb="2" color="red.500">
-          Offered price and last price is currently disabled.
+          Offered price and last price is updated every 6 hours.
         </Text>
       </Box>
     </>

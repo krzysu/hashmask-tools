@@ -4,20 +4,23 @@ import { useRouter } from "next/router";
 import { Box, Flex, Heading, Text } from "@chakra-ui/core";
 import { FilterItem } from "../components/Filters/FilterItem";
 import { MaskListWithSorting } from "../components/MaskListWithSorting";
+import { useDataProvider } from "../context/DataProvider";
 import {
   buildCollectionSelectItems,
-  buildMasksFromCollection,
-  Collection,
+  getMaskIdsFromCollection,
   collectionToNameMap,
+  Collection,
 } from "../collections";
 
 const COLLECTION_QUERY_PARAM = "c";
 
 const Index: FC = () => {
   const router = useRouter();
+  const { buildMask } = useDataProvider();
 
   const collection = (router.query[COLLECTION_QUERY_PARAM] || "") as Collection;
-  const masks = buildMasksFromCollection(collection);
+  const maskIds = getMaskIdsFromCollection(collection);
+  const masks = maskIds.map((id) => buildMask(id));
 
   const maskSelectItems = useMemo(
     () => buildCollectionSelectItems("masks"),

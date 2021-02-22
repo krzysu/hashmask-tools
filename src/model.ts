@@ -1,12 +1,14 @@
 import { allTraits } from "./stats";
-import { minMasksDB, openseaDB, similarImageDb } from "./db";
-import { getSameTraitMaskIds } from "./sameTraits";
+import { minMasksDB } from "./db";
 import { ViewMask, Traits } from "../shared/types";
 
 const decode = (traitName: Traits) => (traitIndex: number): string =>
   allTraits[traitName][traitIndex];
 
-export const buildMask = (id: string): ViewMask => {
+export const buildMask = (
+  id: string,
+  openseaDB: Record<string, number[]> = {}
+): ViewMask => {
   const minMask = minMasksDB[id];
   const prices = openseaDB[id] || [0, 0];
 
@@ -29,14 +31,3 @@ export const buildMask = (id: string): ViewMask => {
 };
 
 export const formatPrice = (price: number): string => `${price}Ξ`;
-
-export const buildSameTraitMasks = (id: string): ViewMask[] => {
-  const sameTraitMaskIds = getSameTraitMaskIds(id);
-  return sameTraitMaskIds.map((sameTraitId) => buildMask(sameTraitId));
-};
-
-export const buildSimilarImageMasks = (id: string): ViewMask[] => {
-  return similarImageDb[id]
-    ? similarImageDb[id].map((id) => buildMask(id.toString()))
-    : [];
-};

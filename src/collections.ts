@@ -1,5 +1,3 @@
-import { ViewMask } from "../shared/types";
-import { buildMask } from "./model";
 import { collectionsDb } from "./db";
 
 export type Collection =
@@ -77,13 +75,8 @@ export const buildCollectionSelectItems = (
   ];
 };
 
-const getMaskIdsFromCollection = (name: Collection) => {
+export const getMaskIdsFromCollection = (name: Collection) => {
   return collectionsDb[name]
     ? collectionsDb[name].map((id) => id.toString())
     : [];
-};
-
-export const buildMasksFromCollection = (name: Collection): ViewMask[] => {
-  const maskIds = getMaskIdsFromCollection(name);
-  return maskIds.map((id) => buildMask(id));
 };

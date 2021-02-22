@@ -1,11 +1,12 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import { Box, Button, Flex, Heading, Spinner, Text } from "@chakra-ui/core";
+import { Traits, ViewMask } from "../../shared/types";
 import { MaskList } from "../components/MaskList";
 import { Filters } from "../components/Filters";
 import { SortByItem } from "../components/Filters/SortByItem";
+import { useDataProvider } from "../context/DataProvider";
 import { ANY_VALUE, FilterValues, queryMasks, SortBy } from "../queries";
-import { Traits, ViewMask } from "../../shared/types";
 
 const defaultFilterValues: FilterValues = {
   character: ANY_VALUE,
@@ -16,6 +17,7 @@ const defaultFilterValues: FilterValues = {
 };
 
 const BrowsePage: FC = () => {
+  const { openseaDB } = useDataProvider();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [masks, setMasks] = useState<ViewMask[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -31,6 +33,7 @@ const BrowsePage: FC = () => {
 
   useEffect(() => {
     const { items, total, hasMore, lastIndex } = queryMasks({
+      openseaDB,
       filterValues,
       startIndex,
       sortBy,
@@ -42,7 +45,7 @@ const BrowsePage: FC = () => {
     setTotal(total);
     setLastIndex(lastIndex);
     setIsLoading(false);
-  }, [filterValues, isOffered, isLowPrice, sortBy, startIndex]);
+  }, [openseaDB, filterValues, isOffered, isLowPrice, sortBy, startIndex]);
 
   // will trigger effect
   const showMore = () => setStartIndex(lastIndex);

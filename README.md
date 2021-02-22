@@ -2,12 +2,8 @@
 
 TODO
 
-- finish with open sea prices
-
-  - solve bids/auctions offered price
-  - cross run with offers endpoint including last timestamp
-
-- automate price script
+- automate price script - use https://db.hashmasktools.xyz/opensea.json
+  - show when prices were last updated
 - run image comparison (voyager discs)
 - add price and score filters
 - add 2 category collections - planets and egyptian signs

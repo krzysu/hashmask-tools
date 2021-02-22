@@ -2,16 +2,16 @@ import React, { FC, useMemo } from "react";
 import Head from "next/head";
 import { Box } from "@chakra-ui/core";
 
+import { useDataProvider } from "../context/DataProvider";
 import { useWatchlist } from "../hooks/useWatchlist";
 import { MaskListWithSorting } from "../components/MaskListWithSorting";
-import { buildMask } from "../model";
 
 const WatchlistPage: FC = () => {
+  const { buildMask } = useDataProvider();
   const { watchlist } = useWatchlist();
-  const watchlistMasks = useMemo(
-    () => watchlist.map((id) => buildMask(id)),
-    []
-  );
+  const watchlistMasks = useMemo(() => watchlist.map((id) => buildMask(id)), [
+    buildMask,
+  ]);
 
   return (
     <>

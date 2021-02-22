@@ -5,14 +5,15 @@ import { Box, Flex, Spinner } from "@chakra-ui/core";
 
 import { MaskHero } from "../../components/MaskHero";
 import { MaskListWithSorting } from "../../components/MaskListWithSorting";
-import {
-  buildMask,
-  buildSameTraitMasks,
-  buildSimilarImageMasks,
-} from "../../model";
+import { useDataProvider } from "../../context/DataProvider";
 
 const MaskPage: FC = () => {
   const { query } = useRouter();
+  const {
+    buildMask,
+    buildSameTraitMasks,
+    buildSimilarImageMasks,
+  } = useDataProvider();
   const id = (query.id || "unknown") as string;
 
   let mask;

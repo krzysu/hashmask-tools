@@ -1,5 +1,5 @@
 import { ViewMask } from "../shared/types";
-import { minMasksDB, openseaDB } from "./db";
+import { minMasksDB } from "./db";
 import { buildMask } from "./model";
 
 const BATCH_SIZE = 20;
@@ -19,6 +19,7 @@ export type FilterValues = {
 };
 
 type QueryParams = {
+  openseaDB: Record<string, number[]>;
   filterValues: FilterValues;
   startIndex?: number;
   sortBy?: SortBy;
@@ -59,6 +60,7 @@ const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
 };
 
 export const queryMasks = ({
+  openseaDB = {},
   filterValues,
   startIndex = 0,
   sortBy = "default",
@@ -96,7 +98,7 @@ export const queryMasks = ({
   }
 
   const masks = base
-    .map((id) => buildMask(id))
+    .map((id) => buildMask(id, openseaDB))
     .sort(_sort(sortBy))
     .slice(0, startIndex + BATCH_SIZE);
 
