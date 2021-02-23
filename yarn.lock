@@ -7067,6 +7067,13 @@ napi-build-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/napi-build-utils/-/napi-build-utils-1.0.2.tgz#b1fddc0b2c46e380a0b7a76f984dd47c41a13806"
   integrity sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==
 
+native-image-diff@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/native-image-diff/-/native-image-diff-0.1.11.tgz#978d7107fe2f37f2d5417dd9510e6ea2c462d6dd"
+  integrity sha512-/81SQYlMj8BjC3I0jko8CHwNDl6BAVAOXGA03ZQdw8LGc7x2xbyQ5qDfC86JRTb45DrZa1U4LjcgIJ8cVkvqNg==
+  dependencies:
+    request "^2.88.0"
+
 native-url@0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/native-url/-/native-url-0.3.4.tgz#29c943172aed86c63cee62c8c04db7f5756661f8"
@@ -7203,6 +7210,13 @@ node-html-parser@^1.2.19:
   integrity sha512-sNm4Tdc8zj5HnFtkNEcK/1tpvyfRxEuz1d4rkVceGPeMTfzd2twPTiEo/UbqxOexSt9AzJ/cvQXSTj7fa6Ey1w==
   dependencies:
     he "1.2.0"
+
+node-libpng@^0.2.18:
+  version "0.2.18"
+  resolved "https://registry.yarnpkg.com/node-libpng/-/node-libpng-0.2.18.tgz#af0f7cb7b854cac12a1eae1c268328275c043c5a"
+  integrity sha512-nr2j+Qn68ocw/0mfj09Yg8AEEdjrrQYMnFAWi8wLpwe2FMdLr36OFalIEkrJnwpqQxDybfqw7l1GH2wJ98wUIw==
+  dependencies:
+    request "^2.88.2"
 
 node-libs-browser@^2.0.0, node-libs-browser@^2.2.1:
   version "2.2.1"
@@ -8286,7 +8300,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@^2.67.0:
+request@^2.67.0, request@^2.88.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==

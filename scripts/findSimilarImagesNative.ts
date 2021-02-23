@@ -1,7 +1,6 @@
-import fs from "fs";
 import path from "path";
-import pixelmatch from "pixelmatch";
-import { PNG, PNGWithMetadata } from "pngjs";
+import { diffImages } from "native-image-diff";
+import { readPngFileSync, PngImage } from "node-libpng";
 import { saveToFile } from "./shared/saveToFile";
 import {
   ALL_MASK_IDS,
@@ -29,28 +28,30 @@ const loadImageForMaskId = (id: string) => {
   const imagePath1 = `${folderPath}/${revealedMaskIndex(id)}.png`;
 
   try {
-    return PNG.sync.read(fs.readFileSync(imagePath1));
+    return readPngFileSync(imagePath1);
   } catch (err) {
     console.log(err);
     return false;
   }
 };
 
-const compareMaskImages = (img1: PNGWithMetadata, img2: PNGWithMetadata) => {
+const compareMaskImages = (image1: PngImage, image2: PngImage) => {
   try {
-    const { width, height } = img1;
-    return pixelmatch(img1.data, img2.data, null, width, height, {
-      threshold: 0.4,
+    return diffImages({
+      image1,
+      image2,
+      colorThreshold: 0.1,
+      generateDiffImage: false,
     });
   } catch (err) {
     console.log(err);
-    return -1;
+    return { totalDelta: -1 };
   }
 };
 
 type Similarity = {
   id: string;
-  distance: number;
+  pixels: number;
 };
 
 const compareMaskToOthers = (
@@ -65,14 +66,14 @@ const compareMaskToOthers = (
   return otherMaskIds.map((id) => {
     const img2 = loadImageForMaskId(id);
     if (!img2) {
-      return { id, distance: 0 };
+      return { id, pixels: 0 };
     }
 
-    const numDiffPixels = compareMaskImages(img1, img2);
+    const { totalDelta } = compareMaskImages(img1, img2);
 
     return {
       id,
-      distance: numDiffPixels,
+      pixels: totalDelta,
     };
   });
 };
@@ -80,7 +81,7 @@ const compareMaskToOthers = (
 const prepareToSave = (id: string, similarityData: Similarity[]) => {
   const similarTo = similarityData
     .sort((a, b) => {
-      return a.distance - b.distance;
+      return a.pixels - b.pixels;
     })
     .slice(0, TOTAL_SIMILARITIES_TO_STORE);
 
@@ -103,19 +104,19 @@ const main = async () => {
   const candidatesToRunTheScript = findMasksWithSameTraitLessThan(3); // ALL_MASK_IDS.slice(0, 100);
   const maskIdsToRunScript = candidatesToRunTheScript
     .filter(maskHasSimilarImages)
-    .slice(0, 4);
+    .slice(0, 1);
 
   console.info(`Running for masks: `, maskIdsToRunScript);
 
   const result = maskIdsToRunScript.reduce((acc, maskToCompare) => {
     console.info(`Comparing mask #${maskToCompare}`);
-    const hrstart = process.hrtime();
+    const startTime = process.hrtime();
 
     const otherMaskIds = getOtherMaskIds(maskToCompare);
     const similarities = compareMaskToOthers(maskToCompare, otherMaskIds);
 
-    const hrend = process.hrtime(hrstart);
-    console.info("Execution time: %ds", hrend[0]);
+    const endTime = process.hrtime(startTime);
+    console.info("Execution time: %ds %dms", endTime[0], endTime[1] / 1000000);
 
     return {
       ...acc,

@@ -1,5 +1,6 @@
 import fs from "fs";
 import fetch from "node-fetch";
+import { indexToMaskId } from "./shared/maskUtils";
 import { Mask } from "../shared/types";
 
 const dbData = require(`../db/hashmasks.json`) as Record<string, Mask>;
@@ -29,17 +30,18 @@ const downloadAsync = async (mask: Mask, callback: () => void) => {
   }
 };
 
-const TOTAL_MASKS = 16384;
-const ALL_MASK_IDS = [...Array(TOTAL_MASKS).keys()].map((i) => i.toString());
+// const TOTAL_MASKS = 16384;
+// const ALL_MASK_IDS = [...Array(TOTAL_MASKS).keys()].map((i) => i.toString());
+// const BATCH = [14000, TOTAL_MASKS];
 
 const FAILED_IDS = [];
-const BATCH = [14000, TOTAL_MASKS];
+const FAILED_INDEXES = [].map(indexToMaskId);
 const DELAY = 1000;
 
 const main = async () => {
   await Promise.all(
     // ALL_MASK_IDS.slice(...BATCH).map(async (id, index) => {
-    FAILED_IDS.map(async (id, index) => {
+    FAILED_INDEXES.map(async (id, index) => {
       const fullMask = {
         id,
         ...dbData[id],
