@@ -98,7 +98,7 @@ const Index: FC = () => {
             </Text>
           }
           masks={masks}
-          defaultSortBy="id"
+          defaultSortBy="offeredPrice"
         />
       </Box>
     </>

@@ -7,8 +7,9 @@ const BATCH_SIZE = 20;
 export const ANY_VALUE = "any";
 
 export type SortBy =
-  | keyof Pick<ViewMask, "id" | "score" | "offeredPrice">
-  | "default";
+  | keyof Pick<ViewMask, "id" | "score" | "offeredPrice" | "lastPrice">
+  | "default"
+  | "lastPriceDesc";
 
 export type FilterValues = {
   character: string; // trait index (number) in minified masks DB
@@ -59,6 +60,32 @@ const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
       return -1;
     }
     if (!a.offeredPrice && b.offeredPrice) {
+      return 1;
+    }
+    return 0;
+  }
+
+  if (sortBy === "lastPrice") {
+    if (a.lastPrice && b.lastPrice) {
+      return a.lastPrice - b.lastPrice;
+    }
+    if (a.lastPrice && !b.lastPrice) {
+      return -1;
+    }
+    if (!a.lastPrice && b.lastPrice) {
+      return 1;
+    }
+    return 0;
+  }
+
+  if (sortBy === "lastPriceDesc") {
+    if (a.lastPrice && b.lastPrice) {
+      return b.lastPrice - a.lastPrice;
+    }
+    if (a.lastPrice && !b.lastPrice) {
+      return -1;
+    }
+    if (!a.lastPrice && b.lastPrice) {
       return 1;
     }
     return 0;

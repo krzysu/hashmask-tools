@@ -58,7 +58,7 @@ const MaskPage: FC = () => {
             heading={`Same traits (${sameTraitMasks.length})`}
             masks={sameTraitMasks}
             limit={20}
-            defaultSortBy="id"
+            defaultSortBy="offeredPrice"
           />
         </Box>
       )}

@@ -25,6 +25,7 @@ const Faq: FC<{ title: string }> = ({ title, children }) => (
 const Index: FC = () => {
   const { openseaDB } = useDataProvider();
   const [rarestMasks, setRarestMasks] = useState<ViewMask[]>([]);
+  const [highPriceSoldMasks, setHighPriceSoldMasks] = useState<ViewMask[]>([]);
   const [cheapestMasks, setCheapestMasks] = useState<ViewMask[]>([]);
 
   useEffect(() => {
@@ -34,6 +35,15 @@ const Index: FC = () => {
       isOffered: true,
     });
     setRarestMasks(items.slice(0, 5));
+  }, [openseaDB]);
+
+  useEffect(() => {
+    const { items } = queryMasks({
+      openseaDB,
+      sortBy: "lastPriceDesc",
+      isOffered: false,
+    });
+    setHighPriceSoldMasks(items.slice(0, 5));
   }, [openseaDB]);
 
   useEffect(() => {
@@ -63,6 +73,13 @@ const Index: FC = () => {
             Rare for sale
           </Heading>
           <MaskList masks={rarestMasks} />
+        </Box>
+
+        <Box mb="12">
+          <Heading as="h3" mb="8">
+            Sold for highest price
+          </Heading>
+          <MaskList masks={highPriceSoldMasks} />
         </Box>
 
         <Box mb="12">

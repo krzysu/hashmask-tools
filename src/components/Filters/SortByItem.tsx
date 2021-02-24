@@ -19,11 +19,19 @@ const sortItems: Item[] = [
   },
   {
     value: "score",
-    label: "Rarity Score",
+    label: "Rarity score",
   },
   {
     value: "offeredPrice",
-    label: "Offered Price",
+    label: "Offered price",
+  },
+  {
+    value: "lastPrice",
+    label: "Last price",
+  },
+  {
+    value: "lastPriceDesc",
+    label: "Last price DESC",
   },
 ];
 
