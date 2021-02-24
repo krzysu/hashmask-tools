@@ -19,10 +19,16 @@ const anyItem = {
 
 const buildItems = (traitName: Traits) => [
   anyItem,
-  ...allTraits[traitName].map((item, index) => ({
-    value: index.toString(),
-    label: `${item} (${getTraitTotal(traitName)(item)})`,
-  })),
+  ...[...allTraits[traitName]]
+    .sort((a, b) => {
+      return getTraitTotal(traitName)(a) - getTraitTotal(traitName)(b);
+    })
+    .map((item) => {
+      return {
+        value: allTraits[traitName].indexOf(item).toString(),
+        label: `${item} (${getTraitTotal(traitName)(item)})`,
+      };
+    }),
 ];
 
 type Props = {
