@@ -9,10 +9,6 @@ export const saveToFile = (
     ? JSON.stringify(data)
     : JSON.stringify(data, null, 2);
 
-  fs.writeFile(`db/${fileName}`, dataString, (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`Data saved to ${fileName}`);
-  });
+  fs.writeFileSync(`db/${fileName}`, dataString);
+  console.log(`Data saved to ${fileName}`);
 };

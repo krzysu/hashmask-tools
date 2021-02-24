@@ -64,7 +64,7 @@ const formatLastSale = (event: AssetEvent): Price => {
   };
 };
 
-const PAGES_LENGTH = 163; // 163
+const PAGES_LENGTH = 164; // 164
 const LIMIT = 50;
 const PAGES = Array.from({ length: PAGES_LENGTH }, (_, i) => i);
 const DELAY = 1100;
@@ -141,7 +141,7 @@ const queryAndSave = async (order: string) => {
     };
   }, {});
 
-  const filePath = path.resolve(__dirname, `../db/${DB_NAME}`);
+  const filePath = path.resolve(__dirname, `../public/${DB_NAME}`);
   const dbFile = fs.readFileSync(filePath, "utf8");
   const dbData = JSON.parse(dbFile);
 

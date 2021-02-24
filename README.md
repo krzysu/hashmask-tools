@@ -11,6 +11,14 @@ TODO
 - show which masks are in NTFX fund
 - register on opensea for referral link
 
+### Scripts
+
+Run multiple image comparison scripts with
+
+```
+yarn concurrently "yarn script scripts/findSimilarImagesNative.ts" "yarn script scripts/findSimilarImagesNative.ts 2" "yarn script scripts/findSimilarImagesNative.ts 4"
+```
+
 ### Subcategories of explicit traits
 
 Level 1: Category (e.g. animal mask)

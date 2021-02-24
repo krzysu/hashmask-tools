@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 import { diffImages } from "native-image-diff";
 import { readPngFileSync, PngImage } from "node-libpng";
 import { saveToFile } from "./shared/saveToFile";
@@ -101,14 +102,19 @@ const main = async () => {
   // run the script for first N
   // manualy rerun the script
 
+  const indexFromArgs = process.argv.slice(2)[0]
+    ? Number(process.argv.slice(2)[0])
+    : null;
+  const startingIndex = indexFromArgs || 0;
+
   const candidatesToRunTheScript = findMasksWithSameTraitLessThan(3); // ALL_MASK_IDS.slice(0, 100);
   const maskIdsToRunScript = candidatesToRunTheScript
     .filter(maskHasSimilarImages)
-    .slice(0, 1);
+    .slice(startingIndex, startingIndex + 2);
 
   console.info(`Running for masks: `, maskIdsToRunScript);
 
-  const result = maskIdsToRunScript.reduce((acc, maskToCompare) => {
+  maskIdsToRunScript.forEach((maskToCompare) => {
     console.info(`Comparing mask #${maskToCompare}`);
     const startTime = process.hrtime();
 
@@ -118,18 +124,21 @@ const main = async () => {
     const endTime = process.hrtime(startTime);
     console.info("Execution time: %ds %dms", endTime[0], endTime[1] / 1000000);
 
-    return {
-      ...acc,
-      ...prepareToSave(maskToCompare, similarities),
+    const result = prepareToSave(maskToCompare, similarities);
+
+    const filePath = path.resolve(__dirname, `../db/${DB_NAME}`);
+    const dbFile = fs.readFileSync(filePath, "utf8");
+    const latestDbData = JSON.parse(dbFile);
+
+    console.log(`Saving result for #${maskToCompare}`, result);
+
+    const db = {
+      ...latestDbData,
+      ...result,
     };
+
+    saveToFile(db, DB_NAME);
   }, {});
-
-  const db = {
-    ...dbData,
-    ...result,
-  };
-
-  saveToFile(db, DB_NAME);
 };
 
 main();
