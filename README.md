@@ -2,14 +2,15 @@
 
 TODO
 
-- automate price script - use https://db.hashmasktools.xyz/opensea.json
-  - show when prices were last updated
-- run image comparison
-- add price and score filters
+- browse: deep linking to results (by filter, sort and page)
+- pagination instead of load more on browse
+- add price and score filters (premium)
 - add 2 category collections - planets and egyptian signs
 - use more traits from spreadsheet (backgrounds)
 - show which masks are in NTFX fund
-- register on opensea for referral link
+- show in mask item if in collection or has similar images or in NTFX fund
+- run image comparison
+- show when prices were last updated
 
 ### Scripts
 
