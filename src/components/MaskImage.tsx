@@ -18,10 +18,14 @@ export const MaskImage: FC<Props & ImageProps> = ({
   fallbackProps,
   ...rest
 }) => {
+  const imgUrl =
+    process.env.NODE_ENV === "development"
+      ? `/assets/${mask.index}.png`
+      : `https://hashmasksstore.blob.core.windows.net/hashmaskspreview/${mask.index}.png`;
+
   return (
     <Image
-      src={`https://hashmasksstore.blob.core.windows.net/hashmaskspreview/${mask.index}.png`}
-      // src={`/assets/${mask.index}.png`}
+      src={imgUrl}
       alt={`Hashmask #${mask.id}`}
       fallback={
         <Center {...fallbackProps}>
