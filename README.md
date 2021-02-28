@@ -7,7 +7,7 @@ TODO
 - add price and score filters (premium)
 - add 2 category collections - planets and egyptian signs
 - use more traits from spreadsheet (backgrounds)
-- show which masks are in NTFX fund
+- show which masks are in NTFX fund -> nftx owner address 0xaf93fcce0548d3124a5fc3045adaf1dde4e8bf7e
 - show in mask item if in collection or has similar images or in NTFX fund
 - run image comparison
 - show when prices were last updated
@@ -35,7 +35,7 @@ Hashmasks Provenance Record
 NTFX fund MASK
 
 - https://nftx.org/#/fund/20
-- https://sushiswap.fi/token/0x0fe629d1e84e171f8ff0c1ded2cc2221caa48a3f
+- https://app.sushi.com/token/0x0fe629d1e84e171f8ff0c1ded2cc2221caa48a3f
 
 NFT20 another fund
 
@@ -49,6 +49,7 @@ Similar projects
 - https://www.hashmaskfinder.com/
 - https://maskswap.xyz/#/
 - https://hashyverse.com/events
+- https://maskradar.yobalabs.com/
 
 MaskDAO
 
