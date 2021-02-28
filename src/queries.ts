@@ -1,5 +1,5 @@
 import { ViewMask } from "../shared/types";
-import { minMasksDB } from "./db";
+import { minMasksDB, similarImageDb } from "./db";
 import { buildMask } from "./model";
 
 const BATCH_SIZE = 20;
@@ -34,6 +34,7 @@ type QueryParams = {
   sortBy?: SortBy;
   isOffered?: boolean;
   isLowPrice?: boolean;
+  withSimilarImages?: boolean;
 };
 
 type QueryResponse = {
@@ -101,6 +102,7 @@ export const queryMasks = ({
   sortBy = "default",
   isOffered,
   isLowPrice,
+  withSimilarImages,
 }: QueryParams): QueryResponse => {
   let base = Object.keys(minMasksDB);
 
@@ -127,9 +129,12 @@ export const queryMasks = ({
   }
   if (isLowPrice) {
     base = base.filter((id) =>
-      !!openseaDB[id] ? openseaDB[id][0] > 0 && openseaDB[id][0] <= 4 : false
+      !!openseaDB[id] ? openseaDB[id][0] > 0 && openseaDB[id][0] <= 5 : false
     );
     base = base.filter((id) => minMasksDB[id][7] <= 800);
+  }
+  if (withSimilarImages) {
+    base = base.filter((id) => !!similarImageDb[id]);
   }
 
   const masks = base

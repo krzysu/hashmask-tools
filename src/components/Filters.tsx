@@ -94,11 +94,14 @@ export const Filters: FC<Props> = ({
           <WrapItem>
             <Checkbox value="isOffered">Is offered for sale</Checkbox>
           </WrapItem>
-          {/* <WrapItem>
+          <WrapItem>
+            <Checkbox value="withSimilarImages">With similar images</Checkbox>
+          </WrapItem>
+          <WrapItem>
             <Checkbox value="isLowPrice">
-              Under 4Ξ price, under 800 score
+              Under 5Ξ price, under 800 score
             </Checkbox>
-          </WrapItem> */}
+          </WrapItem>
         </Wrap>
       </CheckboxGroup>
     </Box>

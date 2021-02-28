@@ -26,6 +26,7 @@ const BrowsePage: FC = () => {
   );
   const [isOffered, setIsOffered] = useState<boolean>(false);
   const [isLowPrice, setIsLowPrice] = useState<boolean>(false);
+  const [withSimilarImages, setWithSimilarImages] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<SortBy>("id");
 
   useEffect(() => {
@@ -36,13 +37,22 @@ const BrowsePage: FC = () => {
       sortBy,
       isOffered,
       isLowPrice,
+      withSimilarImages,
     });
     setMasks(items);
     setHasMore(hasMore);
     setTotal(total);
     setLastIndex(lastIndex);
     setIsLoading(false);
-  }, [openseaDB, filterValues, isOffered, isLowPrice, sortBy, startIndex]);
+  }, [
+    openseaDB,
+    filterValues,
+    isOffered,
+    isLowPrice,
+    withSimilarImages,
+    sortBy,
+    startIndex,
+  ]);
 
   // will trigger effect
   const showMore = () => setStartIndex(lastIndex);
@@ -62,6 +72,9 @@ const BrowsePage: FC = () => {
   const handleCheckboxChange = useCallback((checked: string[]) => {
     checked.includes("isOffered") ? setIsOffered(true) : setIsOffered(false);
     checked.includes("isLowPrice") ? setIsLowPrice(true) : setIsLowPrice(false);
+    checked.includes("withSimilarImages")
+      ? setWithSimilarImages(true)
+      : setWithSimilarImages(false);
 
     setStartIndex(0);
     setLastIndex(0);
@@ -73,6 +86,9 @@ const BrowsePage: FC = () => {
   }
   if (isLowPrice) {
     checkboxValue.push("isLowPrice");
+  }
+  if (withSimilarImages) {
+    checkboxValue.push("withSimilarImages");
   }
 
   if (isLoading) {
