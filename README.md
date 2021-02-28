@@ -2,8 +2,6 @@
 
 TODO
 
-- browse: deep linking to results (by filter, sort and page)
-- pagination instead of load more on browse
 - add price and score filters (premium)
 - add 2 category collections - planets and egyptian signs
 - use more traits from spreadsheet (backgrounds)

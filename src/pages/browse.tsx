@@ -1,34 +1,64 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
-import { Box, Button, Flex, Heading, Spinner, Text } from "@chakra-ui/core";
+import { useRouter } from "next/router";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Link,
+  Spinner,
+  Text,
+} from "@chakra-ui/core";
 import { Traits, ViewMask } from "../../shared/types";
 import { MaskList } from "../components/MaskList";
 import { Filters } from "../components/Filters";
 import { SortByItem } from "../components/Filters/SortByItem";
 import { useDataProvider } from "../context/DataProvider";
 import {
+  ANY_VALUE,
   defaultFilterValues,
   FilterValues,
   queryMasks,
   SortBy,
 } from "../queries";
 
+const queryToFilterValues = ({
+  character = ANY_VALUE,
+  mask = ANY_VALUE,
+  eyes = ANY_VALUE,
+  skin = ANY_VALUE,
+  item = ANY_VALUE,
+}): FilterValues => {
+  return {
+    ...defaultFilterValues,
+    character,
+    mask,
+    eyes,
+    skin,
+    item,
+  };
+};
+
 const BrowsePage: FC = () => {
+  const router = useRouter();
   const { openseaDB } = useDataProvider();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [masks, setMasks] = useState<ViewMask[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);
-  const [page, setPage] = useState<number>(0);
-  const [filterValues, setFilterValues] = useState<FilterValues>(
-    defaultFilterValues
-  );
-  const [isOffered, setIsOffered] = useState<boolean>(false);
-  const [isLowPrice, setIsLowPrice] = useState<boolean>(false);
-  const [withSimilarImages, setWithSimilarImages] = useState<boolean>(false);
-  const [sortBy, setSortBy] = useState<SortBy>("id");
 
-  const scrollToRef = useRef<HTMLParagraphElement>(null);
+  const filterValues = useMemo(() => queryToFilterValues(router.query), [
+    router.query,
+  ]);
+
+  const isOffered = Boolean(Number(router.query.isOffered)) || false;
+  const isLowPrice = Boolean(Number(router.query.isLowPrice)) || false;
+  const withSimilarImages =
+    Boolean(Number(router.query.withSimilarImages)) || false;
+  const sortBy = (router.query.sort as SortBy) || "id";
+  const page = Number(router.query.page as string) || 0;
 
   useEffect(() => {
     const { items, total, hasMore } = queryMasks({
@@ -47,44 +77,79 @@ const BrowsePage: FC = () => {
   }, [
     openseaDB,
     filterValues,
+    sortBy,
     isOffered,
     isLowPrice,
     withSimilarImages,
-    sortBy,
     page,
   ]);
 
-  useEffect(() => {
-    if (scrollToRef.current && page > 0) {
-      scrollToRef.current.scrollIntoView({
-        behavior: "smooth",
+  const routerReplace = useCallback(
+    (params: {}) => {
+      router.replace({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          ...params,
+        },
       });
-    }
-  }, [page, scrollToRef]);
+    },
+    [router]
+  );
 
-  const nextPage = () => setPage(page + 1);
-  const prevPage = () => setPage(page - 1);
+  const nextPage = useCallback(() => {
+    setIsLoading(true);
+    routerReplace({
+      page: Number(page) + 1,
+    });
+  }, [routerReplace]);
+
+  const prevPage = useCallback(() => {
+    setIsLoading(true);
+    routerReplace({
+      page: Number(page) - 1,
+    });
+  }, [routerReplace]);
 
   const handleFilterChange = useCallback(
     (traitName: Traits) => (traitIndex: string) => {
-      setFilterValues({
-        ...filterValues,
+      routerReplace({
         [traitName]: traitIndex,
+        page: 0,
       });
-      setPage(0);
     },
-    [filterValues]
+    [routerReplace]
   );
 
-  const handleCheckboxChange = useCallback((checked: string[]) => {
-    checked.includes("isOffered") ? setIsOffered(true) : setIsOffered(false);
-    checked.includes("isLowPrice") ? setIsLowPrice(true) : setIsLowPrice(false);
-    checked.includes("withSimilarImages")
-      ? setWithSimilarImages(true)
-      : setWithSimilarImages(false);
+  const handleCheckboxChange = useCallback(
+    (checked: string[]) => {
+      routerReplace({
+        isOffered: Number(checked.includes("isOffered")),
+        isLowPrice: Number(checked.includes("isLowPrice")),
+        withSimilarImages: Number(checked.includes("withSimilarImages")),
+        page: 0,
+      });
+    },
+    [routerReplace]
+  );
 
-    setPage(0);
-  }, []);
+  const handleSortByChange = useCallback(
+    (newSortBy) => {
+      routerReplace({
+        sort: newSortBy,
+        page: 0,
+      });
+    },
+    [routerReplace]
+  );
+
+  const clearAllFilters = useCallback(() => {
+    router.replace({
+      pathname: router.pathname,
+    });
+  }, [router]);
+
+  const hasAnyFilters = Object.keys(router.query).length > 0;
 
   const checkboxValue = [];
   if (isOffered) {
@@ -125,21 +190,36 @@ const BrowsePage: FC = () => {
           flexDirection={["column-reverse", "row"]}
           pb="8"
         >
-          <Text size="sm" fontWeight="bold" ref={scrollToRef}>
-            {`Found ${total} items`}
+          <Text size="sm">
+            <Text as="span" fontWeight="bold">
+              {`Found ${total} items`}
+              {page > 0 && `, showing page ${page + 1}`}
+            </Text>
+            {hasAnyFilters && (
+              <>
+                {" | "}
+                <Link onClick={clearAllFilters} textDecoration="underline">
+                  Clear all filters
+                </Link>
+              </>
+            )}
           </Text>
           <Box pb={["4", "0"]}>
-            <SortByItem value={sortBy} onValueChange={setSortBy} />
+            <SortByItem value={sortBy} onValueChange={handleSortByChange} />
           </Box>
         </Flex>
         <MaskList masks={masks} pb="12" />
         <Flex justifyContent="center">
           {page > 0 && (
-            <Button onClick={prevPage} mr="6">
+            <Button onClick={prevPage} mx="3">
               Previous page
             </Button>
           )}
-          {hasMore && <Button onClick={nextPage}>Next page</Button>}
+          {hasMore && (
+            <Button onClick={nextPage} mx="3">
+              Next page
+            </Button>
+          )}
         </Flex>
       </Box>
     </>
