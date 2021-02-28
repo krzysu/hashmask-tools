@@ -30,18 +30,17 @@ export const defaultFilterValues: FilterValues = {
 type QueryParams = {
   openseaDB: Record<string, number[]>;
   filterValues?: FilterValues;
-  startIndex?: number;
   sortBy?: SortBy;
   isOffered?: boolean;
   isLowPrice?: boolean;
   withSimilarImages?: boolean;
+  page?: number;
 };
 
 type QueryResponse = {
   items: ViewMask[];
   hasMore: boolean;
   total: number;
-  lastIndex: number;
 };
 
 const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
@@ -98,11 +97,11 @@ const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
 export const queryMasks = ({
   openseaDB = {},
   filterValues = defaultFilterValues,
-  startIndex = 0,
   sortBy = "default",
   isOffered,
   isLowPrice,
   withSimilarImages,
+  page = 0,
 }: QueryParams): QueryResponse => {
   let base = Object.keys(minMasksDB);
 
@@ -137,16 +136,17 @@ export const queryMasks = ({
     base = base.filter((id) => !!similarImageDb[id]);
   }
 
+  const offset = page * BATCH_SIZE;
+
   const masks = base
     .map((id) => buildMask(id, openseaDB))
     .sort(_sort(sortBy))
-    .slice(0, startIndex + BATCH_SIZE);
+    .slice(offset, offset + BATCH_SIZE);
 
   return {
     items: masks,
-    hasMore: base.length > masks.length,
+    hasMore: base.length > offset + BATCH_SIZE,
     total: base.length,
-    lastIndex: startIndex + BATCH_SIZE,
   };
 };
 

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import { Box, Button, Flex, Heading, Spinner, Text } from "@chakra-ui/core";
 import { Traits, ViewMask } from "../../shared/types";
@@ -19,8 +19,7 @@ const BrowsePage: FC = () => {
   const [masks, setMasks] = useState<ViewMask[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);
-  const [lastIndex, setLastIndex] = useState<number>(0);
-  const [startIndex, setStartIndex] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
   const [filterValues, setFilterValues] = useState<FilterValues>(
     defaultFilterValues
   );
@@ -29,20 +28,21 @@ const BrowsePage: FC = () => {
   const [withSimilarImages, setWithSimilarImages] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<SortBy>("id");
 
+  const scrollToRef = useRef<HTMLParagraphElement>(null);
+
   useEffect(() => {
-    const { items, total, hasMore, lastIndex } = queryMasks({
+    const { items, total, hasMore } = queryMasks({
       openseaDB,
       filterValues,
-      startIndex,
       sortBy,
       isOffered,
       isLowPrice,
       withSimilarImages,
+      page,
     });
     setMasks(items);
     setHasMore(hasMore);
     setTotal(total);
-    setLastIndex(lastIndex);
     setIsLoading(false);
   }, [
     openseaDB,
@@ -51,11 +51,19 @@ const BrowsePage: FC = () => {
     isLowPrice,
     withSimilarImages,
     sortBy,
-    startIndex,
+    page,
   ]);
 
-  // will trigger effect
-  const showMore = () => setStartIndex(lastIndex);
+  useEffect(() => {
+    if (scrollToRef.current && page > 0) {
+      scrollToRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [page, scrollToRef]);
+
+  const nextPage = () => setPage(page + 1);
+  const prevPage = () => setPage(page - 1);
 
   const handleFilterChange = useCallback(
     (traitName: Traits) => (traitIndex: string) => {
@@ -63,8 +71,7 @@ const BrowsePage: FC = () => {
         ...filterValues,
         [traitName]: traitIndex,
       });
-      setStartIndex(0);
-      setLastIndex(0);
+      setPage(0);
     },
     [filterValues]
   );
@@ -76,8 +83,7 @@ const BrowsePage: FC = () => {
       ? setWithSimilarImages(true)
       : setWithSimilarImages(false);
 
-    setStartIndex(0);
-    setLastIndex(0);
+    setPage(0);
   }, []);
 
   const checkboxValue = [];
@@ -119,7 +125,7 @@ const BrowsePage: FC = () => {
           flexDirection={["column-reverse", "row"]}
           pb="8"
         >
-          <Text size="sm" fontWeight="bold">
+          <Text size="sm" fontWeight="bold" ref={scrollToRef}>
             {`Found ${total} items`}
           </Text>
           <Box pb={["4", "0"]}>
@@ -127,11 +133,14 @@ const BrowsePage: FC = () => {
           </Box>
         </Flex>
         <MaskList masks={masks} pb="12" />
-        {hasMore && (
-          <Flex justifyContent="center">
-            <Button onClick={showMore}>Show more</Button>
-          </Flex>
-        )}
+        <Flex justifyContent="center">
+          {page > 0 && (
+            <Button onClick={prevPage} mr="6">
+              Previous page
+            </Button>
+          )}
+          {hasMore && <Button onClick={nextPage}>Next page</Button>}
+        </Flex>
       </Box>
     </>
   );
