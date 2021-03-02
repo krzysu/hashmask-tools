@@ -10,6 +10,8 @@ import { buildMask as buildMaskModel } from "../model";
 import { similarImageDb } from "../db";
 import { getSameTraitMaskIds } from "../sameTraits";
 
+const NFTX_HASHMASK_VAULT_ID = 20;
+
 const buildSameTraitMasks = (
   id: string,
   buildMask = buildMaskModel
@@ -29,6 +31,7 @@ const buildSimilarImageMasks = (
 
 interface State {
   openseaDB: Record<string, number[]>;
+  nftxDB: number[];
   buildMask: (id: string) => ViewMask;
   buildSameTraitMasks: typeof buildSameTraitMasks;
   buildSimilarImageMasks: typeof buildSimilarImageMasks;
@@ -36,25 +39,40 @@ interface State {
 
 const initialState: State = {
   openseaDB: {},
+  nftxDB: [],
   buildMask: buildMaskModel,
   buildSameTraitMasks,
   buildSimilarImageMasks,
+};
+
+type NftxVaultData = {
+  vaultId: number;
+  holdings: string[];
 };
 
 const stateCtx = createContext<State>(initialState);
 
 const DataProvider: React.FC = ({ children }) => {
   const [openseaDB, setOpenseaDB] = useState<Record<string, number[]>>({});
+  const [nftxDB, setNftxDB] = useState<number[]>([]);
 
   useEffect(() => {
     const run = async () => {
-      try {
-        const result = await fetch("https://db.hashmasktools.xyz/opensea.json");
-        const data = await result.json();
-        setOpenseaDB(data as Record<string, number[]>);
-      } catch (e) {
-        console.error(e);
-      }
+      fetch("https://db.hashmasktools.xyz/opensea.json")
+        .then((response) => response.json())
+        .then((data) => setOpenseaDB(data as Record<string, number[]>))
+        .catch((e) => console.error(e));
+
+      fetch("https://nftx.xyz/funds-data")
+        .then((response) => response.json())
+        .then((json: NftxVaultData[]) => {
+          const fund20 = json.find(
+            (i: NftxVaultData) => i.vaultId === NFTX_HASHMASK_VAULT_ID
+          );
+          const holdings = fund20?.holdings.map((id) => Number(id));
+          setNftxDB(holdings || []);
+        })
+        .catch((e) => console.error(e));
     };
 
     run();
@@ -78,6 +96,7 @@ const DataProvider: React.FC = ({ children }) => {
     <stateCtx.Provider
       value={{
         openseaDB,
+        nftxDB,
         buildMask,
         buildSameTraitMasks: buildSameTraitMasksWithOffers,
         buildSimilarImageMasks: buildSimilarImageMasksWithOffers,

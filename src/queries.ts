@@ -29,11 +29,13 @@ export const defaultFilterValues: FilterValues = {
 
 type QueryParams = {
   openseaDB: Record<string, number[]>;
+  nftxDB?: number[];
   filterValues?: FilterValues;
   sortBy?: SortBy;
   isOffered?: boolean;
   isLowPrice?: boolean;
   withSimilarImages?: boolean;
+  isNftx?: boolean;
   page?: number;
 };
 
@@ -96,11 +98,13 @@ const _sort = (sortBy: SortBy) => (a: ViewMask, b: ViewMask) => {
 
 export const queryMasks = ({
   openseaDB = {},
+  nftxDB = [],
   filterValues = defaultFilterValues,
   sortBy = "default",
   isOffered,
   isLowPrice,
   withSimilarImages,
+  isNftx,
   page = 0,
 }: QueryParams): QueryResponse => {
   let base = Object.keys(minMasksDB);
@@ -134,6 +138,9 @@ export const queryMasks = ({
   }
   if (withSimilarImages) {
     base = base.filter((id) => !!similarImageDb[id]);
+  }
+  if (isNftx) {
+    base = base.filter((id) => nftxDB.includes(Number(id)));
   }
 
   const offset = page * BATCH_SIZE;

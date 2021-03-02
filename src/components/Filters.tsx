@@ -98,6 +98,9 @@ export const Filters: FC<Props> = ({
             <Checkbox value="withSimilarImages">With similar images</Checkbox>
           </WrapItem>
           <WrapItem>
+            <Checkbox value="isNftx">In NFTX fund</Checkbox>
+          </WrapItem>
+          <WrapItem>
             <Checkbox value="isLowPrice">
               Under 5Ξ price, under 800 score
             </Checkbox>

@@ -42,7 +42,7 @@ const queryToFilterValues = ({
 
 const BrowsePage: FC = () => {
   const router = useRouter();
-  const { openseaDB } = useDataProvider();
+  const { openseaDB, nftxDB } = useDataProvider();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [masks, setMasks] = useState<ViewMask[]>([]);
@@ -57,17 +57,20 @@ const BrowsePage: FC = () => {
   const isLowPrice = Boolean(Number(router.query.isLowPrice)) || false;
   const withSimilarImages =
     Boolean(Number(router.query.withSimilarImages)) || false;
+  const isNftx = Boolean(Number(router.query.isNftx)) || false;
   const sortBy = (router.query.sort as SortBy) || "id";
   const page = Number(router.query.page as string) || 0;
 
   useEffect(() => {
     const { items, total, hasMore } = queryMasks({
       openseaDB,
+      nftxDB,
       filterValues,
       sortBy,
       isOffered,
       isLowPrice,
       withSimilarImages,
+      isNftx,
       page,
     });
     setMasks(items);
@@ -76,11 +79,13 @@ const BrowsePage: FC = () => {
     setIsLoading(false);
   }, [
     openseaDB,
+    nftxDB,
     filterValues,
     sortBy,
     isOffered,
     isLowPrice,
     withSimilarImages,
+    isNftx,
     page,
   ]);
 
@@ -127,6 +132,7 @@ const BrowsePage: FC = () => {
         isOffered: Number(checked.includes("isOffered")),
         isLowPrice: Number(checked.includes("isLowPrice")),
         withSimilarImages: Number(checked.includes("withSimilarImages")),
+        isNftx: Number(checked.includes("isNftx")),
         page: 0,
       });
     },
@@ -160,6 +166,9 @@ const BrowsePage: FC = () => {
   }
   if (withSimilarImages) {
     checkboxValue.push("withSimilarImages");
+  }
+  if (isNftx) {
+    checkboxValue.push("isNftx");
   }
 
   if (isLoading) {
