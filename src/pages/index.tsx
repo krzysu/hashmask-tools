@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import Head from "next/head";
+import NextLink from "next/link";
 import {
   Box,
+  Button,
+  Flex,
   Heading,
   Link,
   ListItem,
@@ -64,7 +67,7 @@ const Index: FC = () => {
       <Box>
         <Heading mb="20" size="lg">
           HashmaskTools - easily browse and compare Hashmasks, their explicit
-          and implicit traits, recent prices or availability to find your next
+          and implicit traits, recent prices and availability to find your next
           great deal.
         </Heading>
 
@@ -72,21 +75,54 @@ const Index: FC = () => {
           <Heading as="h3" mb="8">
             Rare for sale
           </Heading>
-          <MaskList masks={rarestMasks} />
+          <MaskList masks={rarestMasks} pb="8" />
+          <Flex justifyContent="center">
+            <NextLink
+              href={{
+                pathname: "/browse",
+                query: { isOffered: 1, sort: "score" },
+              }}
+              passHref
+            >
+              <Button as="a">Browse rare for sale</Button>
+            </NextLink>
+          </Flex>
         </Box>
 
         <Box mb="12">
           <Heading as="h3" mb="8">
-            Sold for highest price
+            Highest sale price
           </Heading>
-          <MaskList masks={highPriceSoldMasks} />
+          <MaskList masks={highPriceSoldMasks} pb="8" />
+          <Flex justifyContent="center">
+            <NextLink
+              href={{
+                pathname: "/browse",
+                query: { sort: "lastPriceDesc" },
+              }}
+              passHref
+            >
+              <Button as="a">Browse highest sale price</Button>
+            </NextLink>
+          </Flex>
         </Box>
 
         <Box mb="12">
           <Heading as="h3" mb="8">
             Cheapest for sale
           </Heading>
-          <MaskList masks={cheapestMasks} />
+          <MaskList masks={cheapestMasks} pb="8" />
+          <Flex justifyContent="center">
+            <NextLink
+              href={{
+                pathname: "/browse",
+                query: { sort: "offeredPrice" },
+              }}
+              passHref
+            >
+              <Button as="a">Browse cheapest for sale</Button>
+            </NextLink>
+          </Flex>
         </Box>
 
         <Box mb="12">
