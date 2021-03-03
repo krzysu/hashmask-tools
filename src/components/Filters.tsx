@@ -7,9 +7,11 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/core";
-import { FilterItem } from "./Filters/FilterItem";
+import { useDataProvider } from "../context/DataProvider";
 import { allTraits, getTraitTotal } from "../stats";
 import { ANY_VALUE, FilterValues } from "../queries";
+import { formatPrice } from "../model";
+import { FilterItem } from "./Filters/FilterItem";
 import { Traits } from "../../shared/types";
 
 const anyItem = {
@@ -44,6 +46,8 @@ export const Filters: FC<Props> = ({
   checkboxValue,
   onCheckboxChange,
 }) => {
+  const { prices } = useDataProvider();
+
   return (
     <Box pb="4">
       <Flex flexDirection={["column", null, "row"]} pb="4" wrap="wrap">
@@ -98,7 +102,9 @@ export const Filters: FC<Props> = ({
             <Checkbox value="withSimilarImages">With similar images</Checkbox>
           </WrapItem>
           <WrapItem>
-            <Checkbox value="isNftx">In NFTX fund</Checkbox>
+            <Checkbox value="isNftx">{`In NFTX fund (MASK price: ${formatPrice(
+              prices["nftx-hashmasks-index"]?.eth || 0
+            )})`}</Checkbox>
           </WrapItem>
           <WrapItem>
             <Checkbox value="isLowPrice">

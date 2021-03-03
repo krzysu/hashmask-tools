@@ -29,17 +29,25 @@ const buildSimilarImageMasks = (
     : [];
 };
 
-interface State {
+type Prices = {
+  "nftx-hashmasks-index"?: {
+    eth: number;
+  };
+};
+
+type State = {
   openseaDB: Record<string, number[]>;
   nftxDB: number[];
+  prices: Prices;
   buildMask: (id: string) => ViewMask;
   buildSameTraitMasks: typeof buildSameTraitMasks;
   buildSimilarImageMasks: typeof buildSimilarImageMasks;
-}
+};
 
 const initialState: State = {
   openseaDB: {},
   nftxDB: [],
+  prices: {},
   buildMask: buildMaskModel,
   buildSameTraitMasks,
   buildSimilarImageMasks,
@@ -55,6 +63,7 @@ const stateCtx = createContext<State>(initialState);
 const DataProvider: React.FC = ({ children }) => {
   const [openseaDB, setOpenseaDB] = useState<Record<string, number[]>>({});
   const [nftxDB, setNftxDB] = useState<number[]>([]);
+  const [prices, setPrices] = useState<Prices>({});
 
   useEffect(() => {
     const run = async () => {
@@ -63,7 +72,7 @@ const DataProvider: React.FC = ({ children }) => {
         .then((data) => setOpenseaDB(data as Record<string, number[]>))
         .catch((e) => console.error(e));
 
-      fetch("https://nftx.xyz/funds-data")
+      fetch("https://nftx.ethereumdb.com/v1/vaults/?eligibilities=false")
         .then((response) => response.json())
         .then((json: NftxVaultData[]) => {
           const fund20 = json.find(
@@ -71,6 +80,15 @@ const DataProvider: React.FC = ({ children }) => {
           );
           const holdings = fund20?.holdings.map((id) => Number(id));
           setNftxDB(holdings || []);
+        })
+        .catch((e) => console.error(e));
+
+      fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=nftx-hashmasks-index&vs_currencies=eth"
+      )
+        .then((response) => response.json())
+        .then((json: Prices) => {
+          setPrices(json);
         })
         .catch((e) => console.error(e));
     };
@@ -97,6 +115,7 @@ const DataProvider: React.FC = ({ children }) => {
       value={{
         openseaDB,
         nftxDB,
+        prices,
         buildMask,
         buildSameTraitMasks: buildSameTraitMasksWithOffers,
         buildSimilarImageMasks: buildSimilarImageMasksWithOffers,
