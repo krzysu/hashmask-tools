@@ -67,7 +67,7 @@ const DataProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const run = async () => {
-      fetch("https://db.hashmasktools.xyz/opensea.json")
+      fetch("https://nft-prices.netlify.app/hashmasks.json")
         .then((response) => response.json())
         .then((data) => setOpenseaDB(data as Record<string, number[]>))
         .catch((e) => console.error(e));
